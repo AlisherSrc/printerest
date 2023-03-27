@@ -79,11 +79,17 @@ nav{
 
 .search-bar:focus{
   border: none;
-
+  outline: none;
 }
 
 .search-bar-box img{
   margin-left: 5px;
   width: 25px;
   height: 25px;
+}
+
+.message-icon{
+  width: 25px;
+  height: 25px;
+
 }
