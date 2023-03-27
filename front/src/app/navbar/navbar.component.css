@@ -1,0 +1,89 @@
+*{
+  border-radius: 30px;
+
+}
+
+nav{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 99%;
+}
+
+.icon{
+  width: 33px;
+  height: 33px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.icon-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-box:hover{
+  background-color: rgb(230, 230, 230);
+}
+
+.logo{
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+
+.button{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+  border: none;
+  background-color: transparent;
+  font-size: 1em;
+  cursor: pointer;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+.button-active{
+  background-color: black;
+  color: rgb(250, 250, 250);
+}
+
+.arrow-down{
+  width: 25px;
+  height: 20px;
+}
+
+
+.search-bar{
+  width: 70vw;
+  height: 5vh;
+  border: none;
+  background-color: transparent;
+}
+
+.search-bar-box{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(230, 230, 230);
+}
+
+.search-bar:focus{
+  border: none;
+
+}
+
+.search-bar-box img{
+  margin-left: 5px;
+  width: 25px;
+  height: 25px;
+}
