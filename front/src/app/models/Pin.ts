@@ -1,15 +1,14 @@
-import { category } from "./Category";
+import { Category } from "./Category";
 import { Tag } from "./Tag";
-import { user } from "./User";
+import { User } from "./User";
 
 export interface Pin{
   id: number,
   title: string,
-  description: string,
+  description?: string,
   contentUrl : string,
-  category: category,
   timeUploaded: Date,
-  user: user,
+  user: User,
   tags: Tag[],
   destinationLink: string
 }

@@ -1,12 +1,14 @@
-export interface user{
+export interface User{
   id: number,
   username: string,
+  firstname ?: string,
+  secondname ?: string,
+  phone ?: string,
   email: string,
-  phone: string,
   status: userStatus
 }
 
-const enum userStatus{
+export const enum userStatus{
   Active = 'active',
   Inactive = 'inactive',
   Disabled = 'disabled'
