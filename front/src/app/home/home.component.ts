@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Pin } from '../models/Pin';
+import { PinsService } from '../pins-service.service';
+
 
 @Component({
   selector: 'app-home',
@@ -9,7 +11,15 @@ import { Pin } from '../models/Pin';
 export class HomeComponent {
   pins : Pin[];
 
-  constructor(){
-    this.pins = []
+  constructor(private pinsService: PinsService){
+    this.pins = pinsService.getPins();
+  }
+
+  onPinHover(pin: Pin){
+    console.log(pin.id)
+  }
+
+  onPinLeave(pin: Pin){
+    // Handle pin leave event
   }
 }
