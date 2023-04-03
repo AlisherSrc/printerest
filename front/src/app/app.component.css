@@ -1,3 +1,4 @@
+
 .noneDisplay{
   display: none;
 }
@@ -8,6 +9,28 @@
   background-color: black;
   width: 100vw;
   height: 100vh;
-  z-index: 100;
+  z-index: 5;
   filter: opacity(0.5);
+}
+
+.search-active_box{
+  position: absolute;
+  display: block;
+  width: 73vw;
+  height: 75vh;
+  background-color: var(--white);
+  z-index: 10;
+  border-radius: 0px 0px 30px 30px;
+
+}
+
+.search-active_box-container{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  /* transform: translateY(-1vh); */
+
 }

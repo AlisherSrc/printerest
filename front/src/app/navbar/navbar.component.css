@@ -9,6 +9,7 @@ nav{
   align-items: center;
   justify-content: space-between;
   width: 99%;
+  z-index: 100;
 }
 
 .icon{
