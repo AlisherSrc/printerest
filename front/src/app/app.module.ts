@@ -7,6 +7,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PinComponent } from './pin/pin.component';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SearchBarActiveService } from './search-bar-active.service';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,10 @@ import { NotfoundComponent } from './notfound/notfound.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    InfiniteScrollModule
   ],
-  providers: [],
+  providers: [SearchBarActiveService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,6 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .pin-container:hover img{
@@ -48,7 +49,7 @@
   left: 0;
   z-index: 3;
   cursor: pointer;
-  border: 1px black solid;
+  border: none;
   background-color: var(--blue);
   color:var(--white);
   margin-left: 50%;
@@ -58,3 +59,12 @@
 .pin-container:hover .save-button{
   display: inline;
 }
+
+.loader{
+  display: block;
+  font-size: 45px;
+  z-index: 3;
+  width: 100%;
+  height: 10%;
+}
+

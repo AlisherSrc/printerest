@@ -1,0 +1,13 @@
+.noneDisplay{
+  display: none;
+}
+
+.search-active{
+  display: block;
+  position: absolute;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  filter: opacity(0.5);
+}

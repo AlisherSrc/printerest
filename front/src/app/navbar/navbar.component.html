@@ -4,8 +4,8 @@
   <button class="button create-btn">Create<img class="arrow-down"
       src="./../assets/images/arrow-down-icon-1.png"></button>
   <div class="search-bar-box">
-    <img class="icon" src="./../../assets/images/search-icon-1.png">
-    <input class="search-bar" type="text" placeholder="Search...">
+    <img *ngIf="!search_bar_focus" class="icon" src="./../../assets/images/search-icon-1.png">
+    <input class="search-bar" type="text" placeholder="Search..." (focus)="search_focus()" (blur)="search_unfocus()">
   </div>
   <!-- Notifications icon -->
   <span class="icon-box"><img class="icon" src="./../assets/images/bell-icon-1.png"></span>

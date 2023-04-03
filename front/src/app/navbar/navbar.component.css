@@ -75,6 +75,7 @@ nav{
   align-items: center;
   justify-content: center;
   background-color: var(--gray);
+  width: 72vw;
 }
 
 .search-bar:focus{
@@ -92,3 +93,4 @@ nav{
   width: 25px;
   height: 25px;
 }
+

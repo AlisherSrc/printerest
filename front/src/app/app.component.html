@@ -1,4 +1,7 @@
 <!-- Navbar -->
 <app-navbar></app-navbar>
 <!--Page depending on the router path-->
+<div class="noneDisplay" [ngClass]="{'search-active':isSearchActive}" >
+</div>
 <router-outlet></router-outlet>
+
