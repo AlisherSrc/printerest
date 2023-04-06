@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Pin } from '../models/Pin';
 import { PinsService } from '../pins-service.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll/public-api';
-import { SearchBarActiveService } from '../search-bar-active.service';
 
 @Component({
   selector: 'app-home',
@@ -16,15 +15,11 @@ export class HomeComponent {
   isSearchActive?: boolean;
 
   constructor(private pinsService: PinsService,
-    private sba: SearchBarActiveService
+
   ) {
     this.pins = pinsService.getPins().slice(0, 12);
     this.page = 1;
     this.loaded = true;
-
-    this.sba.searchBarActive$.subscribe((value) => {
-      this.isSearchActive = value;
-    })
 
   }
 

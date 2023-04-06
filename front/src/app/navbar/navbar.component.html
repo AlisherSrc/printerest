@@ -1,11 +1,13 @@
 <nav>
   <img class="logo" src="./../assets/images/logo.png">
   <button class="button button-active">Home</button>
-  <button (blur)="wrapCreateMenu()" (click)="toggleCreateMenu()" class="button create-btn">Create<img class="arrow-down"
-      src="./../assets/images/arrow-down-icon-1.png"></button>
-  <div class="search-bar-box">
+  <div #createMenuBtn>
+    <button (click)="toggleCreateMenu()" class="button create-btn">Create<img class="arrow-down"
+        src="./../assets/images/arrow-down-icon-1.png"></button>
+  </div>
+  <div class="search-bar-box" #search_bar_box>
     <img *ngIf="!search_bar_focus" class="icon" src="./../../assets/images/search-icon-1.png">
-    <input class="search-bar" type="text" placeholder="Search..." (focus)="search_focus()" (blur)="search_unfocus()">
+    <input class="search-bar" type="text" placeholder="Search..." (focus)="search_focus()">
   </div>
   <!-- Notifications icon -->
   <span class="icon-box"><img class="icon" src="./../assets/images/bell-icon-1.png"></span>
@@ -16,6 +18,18 @@
   <!-- accounts and other paramteres icon -->
   <span class="icon-box"><img class="icon arrow-down" src="./../assets/images/arrow-down-icon-1.png"></span>
 </nav>
-<div *ngIf="createMenuDropped"  class="navbar-createmenu">
+
+
+
+<div *ngIf="createMenuDropped" class="navbar-createmenu" #navbarCreatemenu>
   <div class="navbar-createmenu__item"><a>Create Pin</a></div>
+</div>
+
+<div *ngIf="search_bar_focus">
+  <div class="noneDisplay search-active">
+  </div>
+  <div class="search-active_box-container">
+    <div class="noneDisplay search-active_box" #searchActiveBox>
+    </div>
+  </div>
 </div>

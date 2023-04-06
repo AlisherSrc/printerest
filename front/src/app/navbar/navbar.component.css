@@ -45,6 +45,7 @@ nav{
   justify-content: center;
   align-items: center;
   height: 5vh;
+  min-height: 35px;
   border: none;
   background-color: transparent;
   font-size: 1em;
@@ -67,6 +68,7 @@ nav{
 .search-bar{
   width: 70vw;
   height: 5vh;
+  min-height: 35px;
   border: none;
   background-color: transparent;
 }
@@ -121,4 +123,46 @@ nav{
 }
 .navbar-createmenu__item:hover{
   background-color: var(--gray);
+}
+
+
+
+
+
+
+.noneDisplay{
+  display: none;
+}
+
+.search-active{
+  display: block;
+  position: absolute;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  filter: opacity(0.5);
+  border-radius: 0;
+}
+
+.search-active_box{
+  position: absolute;
+  display: block;
+  width: 73vw;
+  height: 75vh;
+  background-color: var(--white);
+  z-index: 10;
+  border-radius: 0px 0px 30px 30px;
+
+}
+
+.search-active_box-container{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  /* transform: translateY(-1vh); */
+
 }

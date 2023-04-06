@@ -1,12 +1,5 @@
-<!-- Navbar -->
-<app-navbar></app-navbar>
+<!-- Header -->
+<app-header></app-header>
 <!--Page depending on the router path-->
-<section>
-  <div class="noneDisplay" [ngClass]="{'search-active':isSearchActive}">
-  </div>
-  <div class="search-active_box-container">
-    <div class="noneDisplay" [ngClass]="{'search-active_box':isSearchActive}">
-    </div>
-  </div>
-</section>
+
 <router-outlet></router-outlet>

@@ -8,10 +8,11 @@ import { PinComponent } from './pin/pin.component';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { SearchBarActiveService } from './search-bar-active.service';
 import { DropOutMenuComponent } from './drop-out-menu/drop-out-menu.component';
 import { DropOutNotificationsComponent } from './drop-out-notifications/drop-out-notifications.component';
 import { DropOutMessagesComponent } from './drop-out-messages/drop-out-messages.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +23,16 @@ import { DropOutMessagesComponent } from './drop-out-messages/drop-out-messages.
     NotfoundComponent,
     DropOutMenuComponent,
     DropOutNotificationsComponent,
-    DropOutMessagesComponent
+    DropOutMessagesComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     InfiniteScrollModule
   ],
-  providers: [SearchBarActiveService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
