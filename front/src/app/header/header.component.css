@@ -2,4 +2,5 @@ header{
   position: fixed;
   z-index: 100;
   background-color: var(--white);
+  width: 99vw;
 }
