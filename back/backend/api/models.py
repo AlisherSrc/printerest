@@ -61,3 +61,24 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class Message(models.Model):
+    # related name is for using
+    # message.sent_messages.all()
+    sender = models.ForeignKey(User,related_name='sent_messages',on_delete=models.CASCADE)
+    recipient = models.ForeignKey(User, related_name='received_messages',on_delete=models.CASCADE)
+    # subject = models.CharField(max_length==255)
+    body = models.TextField()
+    date_sent = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.recipient
+
+class Notification(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    message = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.message
