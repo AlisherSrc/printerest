@@ -10,14 +10,33 @@ export class NavbarComponent {
 
   search_bar_focus: boolean;
   createMenuDropped: boolean;
+  notificationsDropped: boolean;
+  messagesDropped: boolean;
+  menuDropped: boolean;
+
   @ViewChild('searchActiveBox') searchActiveBox !: ElementRef;
   @ViewChild('search_bar_box') searchBarBox !: ElementRef;
+
   @ViewChild('navbarCreatemenu') navbarCreatemanu !: ElementRef;
   @ViewChild('createMenuBtn') createMenuBtn !: ElementRef;
+
+  @ViewChild('navbarNotifications') navbarNotifications !: ElementRef;
+  @ViewChild('notificationIcon') notificationIcon !: ElementRef;
+
+  @ViewChild('menuIcon') menuIcon !: ElementRef;
+  @ViewChild('navbarMenu') navbarMenu !: ElementRef;
+
+  @ViewChild('navbarMessages') navbarMessages !: ElementRef;
+  @ViewChild('messagesIcon') messagesIcon !: ElementRef;
+
+
 
   constructor() {
     this.search_bar_focus = false;
     this.createMenuDropped = false;
+    this.notificationsDropped = false;
+    this.messagesDropped = false;
+    this.menuDropped = false;
   }
 
   ngOnInit(): void {
@@ -46,6 +65,31 @@ export class NavbarComponent {
 
       }
     }
+
+    if(this.notificationsDropped){
+      if(!this.navbarNotifications.nativeElement.contains(event.target)
+      && !this.notificationIcon.nativeElement.contains(event.target)
+      ){
+        this.toggleNotifications();
+      }
+
+    }
+
+    if(this.messagesDropped){
+      if(!this.navbarMessages.nativeElement.contains(event.target)
+      && !this.messagesIcon.nativeElement.contains(event.target)
+      ){
+        this.toggleMessages();
+      }
+    }
+
+    if(this.menuDropped){
+      if(!this.navbarMenu.nativeElement.contains(event.target)
+      && !this.menuIcon.nativeElement.contains(event.target)
+      ){
+        this.toggleMenu();
+      }
+    }
   }
 
 
@@ -63,4 +107,15 @@ export class NavbarComponent {
     this.createMenuDropped = !this.createMenuDropped;
   }
 
+  toggleNotifications = () => {
+    this.notificationsDropped = !this.notificationsDropped;
+  }
+
+  toggleMessages = () => {
+    this.messagesDropped = !this.messagesDropped;
+  }
+
+  toggleMenu = () => {
+    this.menuDropped = !this.menuDropped;
+  }
 }

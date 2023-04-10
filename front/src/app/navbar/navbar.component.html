@@ -5,18 +5,20 @@
     <button (click)="toggleCreateMenu()" class="button create-btn">Create<img class="arrow-down"
         src="./../assets/images/arrow-down-icon-1.png"></button>
   </div>
+
   <div class="search-bar-box" #search_bar_box>
     <img *ngIf="!search_bar_focus" class="icon" src="./../../assets/images/search-icon-1.png">
     <input class="search-bar" type="text" placeholder="Search..." (focus)="search_focus()">
   </div>
+
   <!-- Notifications icon -->
-  <span class="icon-box"><img class="icon" src="./../assets/images/bell-icon-1.png"></span>
+  <span class="icon-box" (click)="toggleNotifications()" #notificationIcon><img class="icon" src="./../assets/images/bell-icon-1.png"></span>
   <!-- Messages icon -->
-  <span class="icon-box"><img class="icon message-icon" src="./../../assets/images/message-icon-1.png"></span>
+  <span class="icon-box" (click)="toggleMessages()" #messagesIcon><img class="icon message-icon" src="./../../assets/images/message-icon-1.png"></span>
   <!-- user icon(avatar) -->
   <span class="icon-box"><img class="icon" src="./../../assets/images/def-user-avatar-icon-1.png"></span>
   <!-- accounts and other paramteres icon -->
-  <span class="icon-box"><img class="icon arrow-down" src="./../assets/images/arrow-down-icon-1.png"></span>
+  <span class="icon-box" (click)="toggleMenu()" #menuIcon><img class="icon arrow-down" src="./../assets/images/arrow-down-icon-1.png"></span>
 </nav>
 
 
@@ -31,5 +33,28 @@
   <div class="search-active_box-container">
     <div class="noneDisplay search-active_box" #searchActiveBox>
     </div>
+  </div>
+</div>
+
+<div *ngIf="notificationsDropped" class="navbar-notifications" #navbarNotifications>
+  <div class="navbar-notifications__container">
+    <div class="navbar-notifications__container-item">
+      <app-drop-out-notifications />
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="messagesDropped"  class="navbar-messages" #navbarMessages>
+  <div class="navbar-messages__container">
+    <div class="navbar-messages__container-item">
+      <app-drop-out-messages />
+    </div>
+  </div>
+</div>
+
+<div *ngIf="menuDropped"  class="navbar-menu" #navbarMenu>
+  <div class="navbar-menu__container">
+      <app-drop-out-menu />
   </div>
 </div>

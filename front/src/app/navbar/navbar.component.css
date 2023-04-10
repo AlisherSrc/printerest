@@ -165,3 +165,47 @@ nav{
   /* transform: translateY(-1vh); */
 
 }
+
+
+
+.navbar-notifications,
+.navbar-messages
+{
+  position: absolute;
+  right: 3vw;
+  width: 20vw;
+  height: 80vh;
+  background-color: var(--white);
+}
+
+.navbar-notifications__container{
+
+}
+
+.navbar-notifications__container-item{
+
+}
+
+.navbar-messages__container{
+
+}
+
+.navbar-messages__container-item{
+
+}
+
+
+
+
+
+.navbar-menu{
+  position: absolute;
+  right: 0.5vw;
+  width: 15vw;
+  height: 80vh;
+  background-color: var(--white);
+}
+
+.navbar-menu__container{
+
+}
