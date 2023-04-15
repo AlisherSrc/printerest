@@ -1,0 +1,27 @@
+<main>
+  <section class="pins-container">
+    <div class="pin" *ngFor="let pin of pins" (mouseenter)="onPinHover(pin)" (mouseleave)="onPinLeave(pin)">
+      <div class="pin-container">
+        <img [src]=pin.contentUrl>
+        <button class="save-button">Save</button>
+      </div>
+    </div>
+<!--
+    <div class="no-more-pins" *ngIf="!hasMore">
+      No more pins to show.
+    </div>  -->
+    <div
+      class="scroll-trigger"
+      infinite-scroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="500"
+      (scrolled)="onScroll()"
+    ></div>
+  </section>
+
+  <div class="loader" *ngIf="!loaded">
+    <p>Loading more pins...</p>
+  </div>
+
+</main>
+
