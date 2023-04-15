@@ -13,6 +13,7 @@ class User(models.Model):
     phone = models.CharField(max_length=255,blank=True,null=True)
     email = models.EmailField()
     status = models.CharField(max_length=10,choices=USER_STATUS_CHOICES, default="active")
+
     # when we will make auth, here will be the password as well
     def __str__(self):
         return self.username
@@ -82,3 +83,12 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.message
+
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    bio = models.CharField(max_length=255,blank=True)
+
+    def __str__(self):
+        return self.user.username
