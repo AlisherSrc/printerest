@@ -1,5 +1,10 @@
-<!-- Header -->
-<app-header></app-header>
-<!--Page depending on the router path-->
-<div class="nav-filler"></div>
-<router-outlet></router-outlet>
+<!-- appears if user is not logged in -->
+<app-login *ngIf="!isLoggedIn"></app-login>
+<!-- we give access to our website only if user is registered -->
+<div *ngIf="isLoggedIn">
+  <!-- Header -->
+  <app-header></app-header>
+  <!--Page depending on the router path-->
+  <div class="nav-filler"></div>
+  <router-outlet></router-outlet>
+</div>

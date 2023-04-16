@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 # Create your models here.
@@ -8,15 +9,19 @@ USER_STATUS_CHOICES = [
         ("disabled","Disabled")
     ]
 
-class User(models.Model):
-    username = models.CharField(max_length=255)
+User = get_user_model()
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     phone = models.CharField(max_length=255,blank=True,null=True)
     email = models.EmailField()
     status = models.CharField(max_length=10,choices=USER_STATUS_CHOICES, default="active")
+    avatar = models.ImageField(upload_to='avatars/')
 
     # when we will make auth, here will be the password as well
     def __str__(self):
-        return self.username
+        return self.user.username
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
@@ -84,11 +89,3 @@ class Notification(models.Model):
     def __str__(self):
         return self.message
 
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-    bio = models.CharField(max_length=255,blank=True)
-
-    def __str__(self):
-        return self.user.username
