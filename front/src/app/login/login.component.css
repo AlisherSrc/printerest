@@ -74,3 +74,19 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #187bcd;
 }
+
+.form-container p{
+  color: #187bcd;
+  cursor: pointer;
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+.form-container p:hover{
+  filter: brightness(110%);
+}
+
+
+.form-container h2{
+  margin-bottom: 15px;
+}

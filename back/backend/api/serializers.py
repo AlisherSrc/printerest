@@ -3,10 +3,9 @@ from django.db import models
 from api.models import User,Tag,USER_STATUS_CHOICES
 
 class UserSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    phone = serializers.CharField()
-    email = serializers.EmailField()
-    status = serializers.CharField()
+    class Meta:
+        model = User
+        fields = ('username','password','email',)
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:

@@ -39,6 +39,13 @@ class Pin(models.Model):
     tags = models.ManyToManyField(Tag)
     destinationLink = models.URLField()
 
+    #     title = serializers.CharField()
+    #     description = serializers.CharField()
+    #     contentUrl = serializers.URLField()
+    #     timeUploaded = serializers.DateTimeField()
+    #     user = UserSerializer()
+    #     tags = TagSerializer(many=True)
+    #     destinationLink = serializers.URLField()
     def __str__(self):
         return self.title
 
