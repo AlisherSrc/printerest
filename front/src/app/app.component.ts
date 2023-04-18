@@ -9,10 +9,15 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent {
   title = 'frontend';
-  isLoggedIn !: boolean;
+  isLoggedIn : boolean;
 
   constructor(private authService : AuthService){
-    this.isLoggedIn = authService.isLoggedIn()
+    this.isLoggedIn = false;
+
+    authService.isLoggedIn().subscribe((logged) => {
+      this.isLoggedIn = logged;
+      console.log("Hey" + this.isLoggedIn)
+    })
   }
 
 

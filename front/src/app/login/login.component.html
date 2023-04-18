@@ -21,7 +21,7 @@
           <label for="password">Password</label>
           <input type="password" [(ngModel)]="password" id="password" name="password" required>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" (click)="login()">Login</button>
       </form>
       <p (click)="toggleRegisterMode()">Don't have an account?</p>
     </div>

@@ -19,7 +19,9 @@ class PinSerializer(serializers.Serializer):
     description = serializers.CharField()
     contentUrl = serializers.URLField()
     timeUploaded = serializers.DateTimeField()
-    user = UserSerializer()
+    # user = UserSerializer()
+    # It will not show up in response
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     tags = TagSerializer(many=True)
     destinationLink = serializers.URLField()
 
