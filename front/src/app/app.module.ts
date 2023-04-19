@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './AuthInterceptor';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { AuthInterceptor } from './AuthInterceptor';
     FooterComponent,
     HeaderComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
