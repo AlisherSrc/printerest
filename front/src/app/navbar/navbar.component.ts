@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { UserProfile } from '../models/UserProfile';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,9 @@ export class NavbarComponent {
   notificationsDropped: boolean;
   messagesDropped: boolean;
   menuDropped: boolean;
+  loggedIn : boolean;
+
+  userAvatar : string = "";
 
   @ViewChild('searchActiveBox') searchActiveBox !: ElementRef;
   @ViewChild('search_bar_box') searchBarBox !: ElementRef;
@@ -37,6 +41,11 @@ export class NavbarComponent {
     this.notificationsDropped = false;
     this.messagesDropped = false;
     this.menuDropped = false;
+    this.loggedIn = false;
+
+    // this.user
+
+    // this.loggedIn ? this.userAvatar = this.userProfile.avatar : './../../assets/images/search-icon-1.png'
   }
 
   ngOnInit(): void {
@@ -45,6 +54,8 @@ export class NavbarComponent {
 
 
     document.addEventListener('click', this.onDocumentClick.bind(this))
+
+
   }
 
   onDocumentClick(event: MouseEvent) {

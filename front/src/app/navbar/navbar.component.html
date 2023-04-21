@@ -7,7 +7,7 @@
   </div>
 
   <div class="search-bar-box" #search_bar_box>
-    <img *ngIf="!search_bar_focus" class="icon" src="./../../assets/images/search-icon-1.png">
+    <img *ngIf="!search_bar_focus" class="icon" [src]="userAvatar">
     <input class="search-bar" type="text" placeholder="Search..." (focus)="search_focus()">
   </div>
 
