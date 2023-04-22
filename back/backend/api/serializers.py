@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.db import models
 from api.models import User,Tag,USER_STATUS_CHOICES
 
-from api.models import Pin
+from api.models import Pin, UserProfile
 
 
 class UserSerializer(serializers.Serializer):
@@ -67,5 +67,31 @@ class PinSerializer(serializers.Serializer):
                 tag, _ = Tag.objects.get_or_create(name=tag_data['name'])
                 instance.tags.add(tag)
         instance.destinationLink = validated_data.get('destinationLink', instance.destinationLink)
+        instance.save()
+        return instance
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        user = User.objects.create_user(**user_data)
+
+        profile = UserProfile.objects.create(user=user, **validated_data)
+        return profile
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        user = instance.user
+        for key, value in user_data.items():
+            setattr(user, key, value)
+        user.save()
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
         instance.save()
         return instance

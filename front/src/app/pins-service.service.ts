@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Pin } from './models/Pin';
-import { pins } from './data/pins';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

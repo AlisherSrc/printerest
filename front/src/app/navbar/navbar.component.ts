@@ -1,5 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, SimpleChanges, ViewChild } from '@angular/core';
 import { UserProfile } from '../models/UserProfile';
+import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,9 +16,10 @@ export class NavbarComponent {
   notificationsDropped: boolean;
   messagesDropped: boolean;
   menuDropped: boolean;
-  loggedIn : boolean;
+  loggedIn: boolean;
 
-  userAvatar : string = "";
+  userAvatar !: string;
+  currUser !: UserProfile;
 
   @ViewChild('searchActiveBox') searchActiveBox !: ElementRef;
   @ViewChild('search_bar_box') searchBarBox !: ElementRef;
@@ -35,25 +38,48 @@ export class NavbarComponent {
 
 
 
-  constructor() {
+  constructor(private userService: UserService,
+    private auth: AuthService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.search_bar_focus = false;
     this.createMenuDropped = false;
     this.notificationsDropped = false;
     this.messagesDropped = false;
     this.menuDropped = false;
+
+    this.auth.isLoggedIn().subscribe((logged) => {
+      this.loggedIn = logged;
+    });
+
+    this.userService.curr_user.subscribe((user) => {
+      this.currUser != user;
+    });
+
+
     this.loggedIn = false;
 
-    // this.user
-
-    // this.loggedIn ? this.userAvatar = this.userProfile.avatar : './../../assets/images/search-icon-1.png'
   }
+
+
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    // this.username = localStorage.getItem('username');
+
+    // this.userService.getUser(this.username).subscribe((user) => {
+    //   this.userAvatar = user.avatar;
+    //   this.cdr.detectChanges();
+    // });
+
+    // // Listen for changes to the username in localStorage
 
 
     document.addEventListener('click', this.onDocumentClick.bind(this))
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
 
 
   }
@@ -67,37 +93,37 @@ export class NavbarComponent {
       }
     }
 
-    if(this.createMenuDropped){
-      if(!this.navbarCreatemanu.nativeElement.contains(event.target)
-      && !this.createMenuBtn.nativeElement.contains(event.target)
-      ){
+    if (this.createMenuDropped) {
+      if (!this.navbarCreatemanu.nativeElement.contains(event.target)
+        && !this.createMenuBtn.nativeElement.contains(event.target)
+      ) {
         this.toggleCreateMenu();
         // console.log("noo")
 
       }
     }
 
-    if(this.notificationsDropped){
-      if(!this.navbarNotifications.nativeElement.contains(event.target)
-      && !this.notificationIcon.nativeElement.contains(event.target)
-      ){
+    if (this.notificationsDropped) {
+      if (!this.navbarNotifications.nativeElement.contains(event.target)
+        && !this.notificationIcon.nativeElement.contains(event.target)
+      ) {
         this.toggleNotifications();
       }
 
     }
 
-    if(this.messagesDropped){
-      if(!this.navbarMessages.nativeElement.contains(event.target)
-      && !this.messagesIcon.nativeElement.contains(event.target)
-      ){
+    if (this.messagesDropped) {
+      if (!this.navbarMessages.nativeElement.contains(event.target)
+        && !this.messagesIcon.nativeElement.contains(event.target)
+      ) {
         this.toggleMessages();
       }
     }
 
-    if(this.menuDropped){
-      if(!this.navbarMenu.nativeElement.contains(event.target)
-      && !this.menuIcon.nativeElement.contains(event.target)
-      ){
+    if (this.menuDropped) {
+      if (!this.navbarMenu.nativeElement.contains(event.target)
+        && !this.menuIcon.nativeElement.contains(event.target)
+      ) {
         this.toggleMenu();
       }
     }
@@ -106,7 +132,7 @@ export class NavbarComponent {
 
   search_focus() {
     this.search_bar_focus = true;
-
+    console.log(this.currUser.email);
   }
 
   search_unfocus() {

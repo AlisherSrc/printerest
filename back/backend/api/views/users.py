@@ -1,26 +1,61 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import render
-from django.http import HttpResponse,JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 from api.models import Pin, UserProfile
-from api.serializers import PinSerializer
+from api.serializers import PinSerializer, UserProfileSerializer
 from rest_framework.decorators import api_view
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 User = get_user_model()
 
+
 class UserProfileView(APIView):
-    def get_object(self, pk):
+    # @staticmethod
+    # def get_object(pk):
+    #     try:
+    #         profile = UserProfile.objects.get(pk=pk)
+    #     except UserProfile.DoesNotExist:
+    #         raise Http404
+    #     return profile
+    @staticmethod
+    def get_object(username):
         try:
-            profile = UserProfile.objects.get(pk=pk)
+            user = User.objects.get(username=username)
+            profile = UserProfile.objects.get(user=user)
+        except User.DoesNotExist:
+            raise Http404
         except UserProfile.DoesNotExist:
             raise Http404
         return profile
 
-    def get(self, request, pk):
-        profile = self.get_object(pk)
-        if profile.user != request.user:
-            return Response({'error': 'You are not authorized to access this profile'}, status=status.HTTP_401_UNAUTHORIZED)
+    def get(self, request, username):
+        profile = self.get_object(username)
+
         serializer = UserProfileSerializer(profile)
         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = UserProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, username):
+        profile = self.get_object(username)
+        serializer = UserProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, username):
+        profile = self.get_object(username)
+        profile.delete()
+        return Response({'deleted': True})
+
+
