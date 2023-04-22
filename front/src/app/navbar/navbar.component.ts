@@ -48,14 +48,15 @@ export class NavbarComponent {
     this.messagesDropped = false;
     this.menuDropped = false;
 
+    // subscribes
     this.auth.isLoggedIn().subscribe((logged) => {
       this.loggedIn = logged;
     });
 
     this.userService.curr_user.subscribe((user) => {
-      this.currUser != user;
+      if(user) this.currUser = user;
     });
-
+    //=============================================
 
     this.loggedIn = false;
 
@@ -66,15 +67,6 @@ export class NavbarComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    // this.username = localStorage.getItem('username');
-
-    // this.userService.getUser(this.username).subscribe((user) => {
-    //   this.userAvatar = user.avatar;
-    //   this.cdr.detectChanges();
-    // });
-
-    // // Listen for changes to the username in localStorage
-
 
     document.addEventListener('click', this.onDocumentClick.bind(this))
   }
@@ -132,7 +124,7 @@ export class NavbarComponent {
 
   search_focus() {
     this.search_bar_focus = true;
-    console.log(this.currUser.email);
+    console.log(this.currUser.avatar);
   }
 
   search_unfocus() {

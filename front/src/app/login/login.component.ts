@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { PinsService } from '../pins-service.service';
+import { UserService } from '../user.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +10,15 @@ import { PinsService } from '../pins-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username : string;
-  password : string;
-  email : string;
-  registerMode : boolean;
+  username: string;
+  password: string;
+  email: string;
+  registerMode: boolean;
 
-  constructor(private auth : AuthService,
-              private pinsService : PinsService ){
+  constructor(private auth: AuthService,
+    private pinsService: PinsService,
+    private userService: UserService
+  ) {
     this.username = '';
     this.password = '';
     this.email = '';
@@ -25,23 +29,32 @@ export class LoginComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     const token = localStorage.getItem('token');
-    if(token){
+    if (token) {
       this.auth.setLoggedIn(true);
 
     }
   }
 
 
-  toggleRegisterMode = () =>{
+  toggleRegisterMode = () => {
     this.registerMode = !this.registerMode;
   }
 
-  login = () => {
-    this.auth.login(this.username,this.password).subscribe((data) => {
-      localStorage.setItem('token',data.token);
-      localStorage.setItem('username',this.username);
-      this.auth.setLoggedIn(true);
-    })
+  login = async () => {
+    // this.auth.login(this.username,this.password).subscribe((data) => {
+    //   localStorage.setItem('token',data.token);
+    //   localStorage.setItem('username',this.username);
+    //   this.auth.setLoggedIn(true);
+    //   this.userService.setCurrentUsername(this.username);
+    // })
+
+    const data = await lastValueFrom(this.auth.login(this.username, this.password));
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('username', this.username);
+    this.auth.setLoggedIn(true);
+    await this.userService.setCurrentUsername(this.username);
+
+    console.log("Registered mode: " + this.registerMode);
   }
 
   resgiter = () => {

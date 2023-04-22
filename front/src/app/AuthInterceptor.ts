@@ -20,6 +20,8 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: req.headers.set('Authorization',`JWT ${token}`),
       })
       return next.handle(newReq);
+    }else{
+      console.warn("No auth token!");
     }
 
 

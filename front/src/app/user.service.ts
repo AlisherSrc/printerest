@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { UserProfile } from './models/UserProfile';
 import { User } from './models/User';
 
@@ -19,17 +19,30 @@ export class UserService {
 
   getUser(username:string):Observable<UserProfile>{
     return this.http.get<UserProfile>(
-      `${this.BASE_URL}/api/${username}/`
+      `${this.BASE_URL}/api/users/${username}/`
     )
   }
 
-  setCurrentUsername(username:string){
+  // setCurrentUsername(username:string){
+  //   this.curr_username.next(username);
+
+  //   this.getUser(username).subscribe((user) => {
+  //     this.curr_user.next(user);
+  //   })
+  // }
+
+  // Depricated
+  // async setCurrentUsername(username: string){
+  //   this.curr_username.next(username);
+  //   const user = await this.getUser(username).toPromise();
+  //   this.curr_user.next(user);
+  // }
+
+
+  async setCurrentUsername(username: string) {
     this.curr_username.next(username);
-
-    this.getUser(username).subscribe((user) => {
-      this.curr_user.next(user);
-    })
-
+    const user = await lastValueFrom(this.getUser(username));
+    this.curr_user.next(user);
   }
 
 }
