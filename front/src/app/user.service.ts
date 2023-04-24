@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { UserProfile } from './models/UserProfile';
 import { User } from './models/User';
+import { BASE_URL } from './globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  BASE_URL: string = 'http://127.0.0.1:8000';
 
   curr_username = new BehaviorSubject<string>("default username");
   curr_user = new BehaviorSubject<UserProfile | undefined>(undefined);
@@ -19,7 +19,7 @@ export class UserService {
 
   getUser(username:string):Observable<UserProfile>{
     return this.http.get<UserProfile>(
-      `${this.BASE_URL}/api/users/${username}/`
+      `${BASE_URL}/api/users/${username}/`
     )
   }
 

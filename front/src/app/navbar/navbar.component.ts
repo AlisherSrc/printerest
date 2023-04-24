@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, SimpleChanges, ViewChild } fr
 import { UserProfile } from '../models/UserProfile';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
+import { MediaService } from '../media.service';
 
 @Component({
   selector: 'app-navbar',
@@ -40,7 +41,8 @@ export class NavbarComponent {
 
   constructor(private userService: UserService,
     private auth: AuthService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private mediaService: MediaService
   ) {
     this.search_bar_focus = false;
     this.createMenuDropped = false;
@@ -54,8 +56,13 @@ export class NavbarComponent {
     });
 
     this.userService.curr_user.subscribe((user) => {
-      if(user) this.currUser = user;
+      if(user){ this.currUser = user;
+        this.mediaService.getAvatar(this.currUser.avatar).subscribe((avatar) => {
+          this.userAvatar = avatar;
+        });
+      }
     });
+
     //=============================================
 
     this.loggedIn = false;
@@ -124,7 +131,9 @@ export class NavbarComponent {
 
   search_focus() {
     this.search_bar_focus = true;
-    console.log(this.currUser.avatar);
+    let path = this.mediaService.getPath(this.currUser.avatar)
+
+    console.log(path);
   }
 
   search_unfocus() {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthToken } from './models/Auth';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { BASE_URL } from './globals';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   // In order to be notified when setLoggedIn() method is called
   private loggedin = new BehaviorSubject<boolean>(false);
-  BASE_URL: string = 'http://127.0.0.1:8000';
+
 
 
   constructor(private http : HttpClient) {
@@ -26,7 +27,7 @@ export class AuthService {
 
   login(username: string, password: string) : Observable<AuthToken> {
     return this.http.post<AuthToken>(
-      `${this.BASE_URL}/api/login/`,
+      `${BASE_URL}/api/login/`,
       {
         username,password
       }

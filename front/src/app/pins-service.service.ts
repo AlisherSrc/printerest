@@ -2,27 +2,26 @@ import { Injectable } from '@angular/core';
 import { Pin } from './models/Pin';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { BASE_URL } from './globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PinsService {
-  BASE_URL = "http://127.0.0.1:8000"
-
   constructor(private client: HttpClient) {
     // this.pins = pins;
   }
 
   getPin(id: number):Observable<Pin>{
     return this.client.get<Pin>(
-      `${this.BASE_URL}/api/pins/${id}/`
+      `${BASE_URL}/api/pins/${id}/`
     )
   }
 
 
   getPins() : Observable<Pin[]>{
     return this.client.get<Pin[]>(
-      `${this.BASE_URL}/api/pins/`
+      `${BASE_URL}/api/pins/`
     )
   }
 
