@@ -6,8 +6,8 @@
 </head>
 <body>
     <header>
-    <img class="profile-pic" src="https://picsum.photos/200" alt="Profile Picture">
-    <h1>My Profile</h1>
+    <img class="profile-pic" [src]="userAvatar ||'https://picsum.photos/200'" alt="Profile Picture">
+    <h1>{{userName}}</h1>
     <button>Change Profile</button>
     <div class="switch-btn">
       <button [class.active]="activeSection === 'created'" (click)="showSection('created')">Created Pins</button>

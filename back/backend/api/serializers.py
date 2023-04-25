@@ -5,7 +5,7 @@ from api.models import User,Tag,USER_STATUS_CHOICES
 from api.models import Pin, UserProfile
 
 
-class UserSerializer(serializers.Serializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username','password','email',)
@@ -27,7 +27,8 @@ class PinSerializer(serializers.Serializer):
     contentUrl = serializers.URLField()
     timeUploaded = serializers.DateTimeField()
     # It will not show up in response
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    user = UserSerializer(read_only=True)
     tags = TagSerializer(many=True)
     destinationLink = serializers.URLField()
 

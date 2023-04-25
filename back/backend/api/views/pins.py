@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
-from api.models import Pin
+from api.models import Pin, User
 from api.serializers import PinSerializer
 from rest_framework.decorators import api_view
 
@@ -48,7 +48,12 @@ class Pins(generics.ListCreateAPIView):
     # permission_classes = (IsAuthenticated,)
     # will work without auth
     # permission_classes = (AllowAny,)
-
-
+# allows to use REST Django
+@api_view(['GET'])
+def get_pins_by_user(request,username):
+    user_obj = User.objects.get(username=username)
+    pins_obj = Pin.objects.filter(user=user_obj)
+    pins = PinSerializer(pins_obj,many=True)
+    return Response(pins.data)
 
 
