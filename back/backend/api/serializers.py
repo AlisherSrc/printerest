@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.db import models
 from api.models import User,Tag,USER_STATUS_CHOICES
 
-from api.models import Pin, UserProfile
+from api.models import Pin, UserProfile, Album
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -48,15 +48,6 @@ class PinSerializer(serializers.Serializer):
         return pin
 
     def update(self, instance, validated_data):
-        # instance.title = validated_data.get('title', instance.title)
-        # instance.description = validated_data.get('description', instance.description)
-        # instance.contentUrl = validated_data.get('contentUrl', instance.contentUrl)
-        # instance.timeUploaded = validated_data.get('timeUploaded', instance.timeUploaded)
-        # instance.tags.set(validated_data.get('tags', instance.tags.all()))
-        # instance.destinationLink = validated_data.get('destinationLink', instance.destinationLink)
-        # instance.save()
-        # return instance
-
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.contentUrl = validated_data.get('contentUrl', instance.contentUrl)
@@ -96,3 +87,47 @@ class UserProfileSerializer(serializers.ModelSerializer):
             setattr(instance, key, value)
         instance.save()
         return instance
+
+
+class AlbumSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=255)
+    pins = PinSerializer(many=True)
+    user = UserSerializer()
+
+    def create(self, validated_data):
+        pins_data = validated_data.pop('pins', [])
+        album = Album.objects.create(**validated_data)
+
+        # Create pins and add them to album
+        for pin_data in pins_data:
+            pin = Pin.objects.create(**pin_data)
+            album.pins.add(pin)
+
+        return album
+
+    def update(self, instance, validated_data):
+        pins_data = validated_data.pop('pins', [])
+
+        # Update album fields
+        instance.name = validated_data.get('name', instance.name)
+        instance.user = validated_data.get('user', instance.user)
+        instance.save()
+
+        # Update or create pins and add them to album
+        for pin_data in pins_data:
+            pin_id = pin_data.pop('id', None)
+
+            if pin_id:
+                pin = Pin.objects.get(id=pin_id)
+                pin.title = pin_data.get('title', pin.title)
+                pin.description = pin_data.get('description', pin.description)
+                pin.contentUrl = pin_data.get('contentUrl', pin.contentUrl)
+                pin.timeUploaded = pin_data.get('timeUploaded', pin.timeUploaded)
+                pin.save()
+            else:
+                pin = Pin.objects.create(**pin_data)
+
+            instance.pins.add(pin)
+
+        return instance
+

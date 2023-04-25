@@ -19,9 +19,14 @@ class UserProfile(models.Model):
     status = models.CharField(max_length=10,choices=USER_STATUS_CHOICES, default="active")
     avatar = models.ImageField(upload_to='avatars/')
 
+
     # when we will make auth, here will be the password as well
     def __str__(self):
         return self.user.username
+
+
+
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
