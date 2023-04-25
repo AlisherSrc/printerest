@@ -3,6 +3,8 @@ import { UserProfile } from '../models/UserProfile';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
 import { MediaService } from '../media.service';
+import { Observable, lastValueFrom } from 'rxjs';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +21,7 @@ export class NavbarComponent {
   menuDropped: boolean;
   loggedIn: boolean;
 
-  userAvatar !: string;
+  userAvatar !: SafeUrl;
   currUser !: UserProfile;
 
   @ViewChild('searchActiveBox') searchActiveBox !: ElementRef;
@@ -42,7 +44,8 @@ export class NavbarComponent {
   constructor(private userService: UserService,
     private auth: AuthService,
     private cdr: ChangeDetectorRef,
-    private mediaService: MediaService
+    private mediaService: MediaService,
+    private sanitizer: DomSanitizer
   ) {
     this.search_bar_focus = false;
     this.createMenuDropped = false;
@@ -55,11 +58,22 @@ export class NavbarComponent {
       this.loggedIn = logged;
     });
 
-    this.userService.curr_user.subscribe((user) => {
-      if(user){ this.currUser = user;
-        this.mediaService.getAvatar(this.currUser.avatar).subscribe((avatar) => {
-          this.userAvatar = avatar;
-        });
+    this.userService.curr_user.subscribe(async (user) => {
+      if(user){
+        this.currUser = user;
+        let avatarPath = mediaService.getPath(this.currUser.avatar)
+
+        // this.mediaService.getAvatar(avatarPath).subscribe((avatar) => {
+        //   this.userAvatar = avatar;
+        //   console.log(this.userAvatar)
+        // });
+        // It will wait until the end of this promise so it will return not Promise but a string
+        avatarPath = await lastValueFrom(this.mediaService.getAvatar(avatarPath))
+
+        this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(avatarPath);
+
+        this.cdr.detectChanges();
+        // console.log(avatarPath,this.userAvatar)
       }
     });
 
@@ -131,9 +145,7 @@ export class NavbarComponent {
 
   search_focus() {
     this.search_bar_focus = true;
-    let path = this.mediaService.getPath(this.currUser.avatar)
 
-    console.log(path);
   }
 
   search_unfocus() {
