@@ -7,8 +7,8 @@
 <body>
     <header>
     <img class="profile-pic" [src]="userAvatar ||'https://picsum.photos/200'" alt="Profile Picture">
-    <h1>{{userName}}</h1>
-    <button>Change Profile</button>
+    <h1>@{{userName}}</h1>
+    <button routerLink="/settings">Change Profile</button>
     <div class="switch-btn">
       <button [class.active]="activeSection === 'created'" (click)="showSection('created')">Created Pins</button>
       <button [class.active]="activeSection === 'saved'" (click)="showSection('saved')">Saved Pins</button>
