@@ -40,7 +40,7 @@ export class LoginComponent {
     this.registerMode = !this.registerMode;
   }
   // login to forms itself, using input username and password and if everything is correct then it gives a JWT token that we use for every
-  // request using Angular interceptor
+  // request using Angular interceptor 
   login = async () => {
     // this.auth.login(this.username,this.password).subscribe((data) => {
     //   localStorage.setItem('token',data.token);

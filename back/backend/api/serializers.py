@@ -27,9 +27,11 @@ class PinSerializer(serializers.Serializer):
     contentUrl = serializers.URLField()
     timeUploaded = serializers.DateTimeField()
     # It will not show up in response
-    # user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    user = UserSerializer(read_only=True)
-    tags = TagSerializer(many=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    # user = UserSerializer(read_only=True)
+    # For using existing user without creating a new one
+    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    tags = TagSerializer(many=True,required=False )
     destinationLink = serializers.URLField()
 
     def create(self, validated_data):
@@ -91,17 +93,18 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 class AlbumSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=255)
-    pins = PinSerializer(many=True)
-    user = UserSerializer()
+    # pins = serializers.ListField(child=serializers.PrimaryKeyRelatedField(queryset=Pin.objects.all()))
+    pins = PinSerializer(read_only=True,many=True)
+    # user = UserSerializer()
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
 
     def create(self, validated_data):
         pins_data = validated_data.pop('pins', [])
         album = Album.objects.create(**validated_data)
 
         # Create pins and add them to album
-        for pin_data in pins_data:
-            pin = Pin.objects.create(**pin_data)
-            album.pins.add(pin)
+        pins = Pin.objects.filter(pk__in=pins_data)
+        album.pins.set(pins)
 
         return album
 
@@ -114,18 +117,32 @@ class AlbumSerializer(serializers.Serializer):
         instance.save()
 
         # Update or create pins and add them to album
+        # for pin_pk in pins_data:
+        #     try:
+        #         pin = Pin.objects.get(pk=pin_pk)
+        #         pin.title = pin_data.get('title', pin.title)
+        #         pin.description = pin_data.get('description', pin.description)
+        #         pin.contentUrl = pin_data.get('contentUrl', pin.contentUrl)
+        #         pin.timeUploaded = pin_data.get('timeUploaded', pin.timeUploaded)
+        #         pin.save()
+        #     except Pin.DoesNotExist:
+        #         pin = Pin.objects.create(pk=pin_pk, **pin_data)
         for pin_data in pins_data:
-            pin_id = pin_data.pop('id', None)
+            pin_id = pin_data.pop('id', None)  # Get the id field
 
             if pin_id:
                 pin = Pin.objects.get(id=pin_id)
+                # Update the fields of the existing pin instance
                 pin.title = pin_data.get('title', pin.title)
                 pin.description = pin_data.get('description', pin.description)
                 pin.contentUrl = pin_data.get('contentUrl', pin.contentUrl)
                 pin.timeUploaded = pin_data.get('timeUploaded', pin.timeUploaded)
                 pin.save()
             else:
+                # Create a new pin instance
                 pin = Pin.objects.create(**pin_data)
+
+
 
             instance.pins.add(pin)
 
