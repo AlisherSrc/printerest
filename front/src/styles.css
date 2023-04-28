@@ -15,3 +15,8 @@ body{
   background-repeat: no-repeat;
   font-family: Arial, sans-serif;
 }
+
+a,a:visited{
+  text-decoration: none;
+  color: black;
+}

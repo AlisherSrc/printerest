@@ -1,0 +1,136 @@
+
+.photo{
+    background-color: rgb(229, 230, 222);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110vh;
+ }
+ 
+ .file_getter {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     grid-gap: 20px;
+     justify-content: center;
+     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+     width: 100vh;
+     background-color: white;
+     height:550px;
+     border-radius: 25px;
+   }
+   
+   input[type="text"], textarea {
+     display: block;
+     width: 100%;
+     padding: 10px;
+     border: none;
+     border-radius: 5px;
+     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+     transition: box-shadow 0.2s ease-in-out;
+   }
+   
+   input[type="text"]:focus, textarea:focus {
+     outline: none;
+     box-shadow: 0 0 10px #972bb8;
+   }
+   
+   textarea {
+     resize: none;
+   }
+   
+   #photo-url{
+    width: 80%;
+   }
+   #photo-container {
+     float: left;
+     margin-right: 20px;
+   }
+   
+   button {
+     display: block;
+     width: 100px;
+     height: 50px;
+     padding: 10px;
+     border: none;
+     border-radius: 25px;
+     background-color: rgb(57,57,190);
+     color: #fff;
+     font-size: 18px;
+     font-weight: bold;
+     cursor: pointer;
+   }
+   
+   button:hover {
+     background-color: rgb(57,57,115);
+   }
+   #text-line {
+     font-size: 20px;
+     padding: 15px;
+     height: 50px;
+     width: 80%;
+   }
+   
+   #photo-description {
+     font-size: 16px;
+     padding: 10px;
+     height: 40px;
+     width: 80%;
+   }
+    input[type="file"] {
+     display: none;
+   }
+    
+   .photo-container-wrapper {
+     position: relative;
+     margin: auto;
+     padding: 30px;
+ 
+   }
+   
+   #photo-container {
+     display: none;
+   }
+   
+   .photo-preview-wrapper {
+     position:relative;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     float: left;
+   }
+   
+   .photo-preview-wrapper img {
+     max-width: 300px;
+     max-height: 100%;
+   }
+   
+   #photo-container {
+     display: inline-block;
+     padding: 6px 12px;
+     cursor: pointer;
+     border: none;
+     border-radius: 5px;
+     background-color: rgb(57, 57, 190);
+     color: #fff;
+     font-size: 18px;
+     text-align: center;
+     font-family: "Youtube Sans", "Roboto", "sans-serif";
+   }
+   
+   #photo-container:hover {
+     background-color: rgb(57, 57, 115);
+   }
+   #desc{
+     display: flex;
+     flex-direction: column;
+     margin: auto;
+   }
+   .but{
+     top:0;
+     right: 0;
+   }
+   #all{
+     display: flex;
+     justify-content: space-between;
+   }
