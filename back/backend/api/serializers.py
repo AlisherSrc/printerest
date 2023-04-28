@@ -8,7 +8,7 @@ from api.models import Pin, UserProfile, Album
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username','password','email',)
+        fields = ('username',)
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -66,11 +66,12 @@ class PinSerializer(serializers.Serializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserSerializer()
+    avatar = serializers.ImageField(read_only=True)  # Make 'avatar' field read-only
 
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields = ('user','email','avatar')
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')

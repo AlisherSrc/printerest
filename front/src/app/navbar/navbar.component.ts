@@ -61,17 +61,21 @@ export class NavbarComponent {
     this.userService.curr_user.subscribe(async (user) => {
       if(user){
         this.currUser = user;
-        let avatarPath = mediaService.getPath(this.currUser.avatar)
-
+        let avatarPath;
+        if(this.currUser.avatar){
+          avatarPath = mediaService.getPath(this.currUser.avatar)
+        }
         // this.mediaService.getAvatar(avatarPath).subscribe((avatar) => {
         //   this.userAvatar = avatar;
         //   console.log(this.userAvatar)
         // });
         // It will wait until the end of this promise so it will return not Promise but a string
+        if(this.currUser.avatar && avatarPath){
+
         avatarPath = await lastValueFrom(this.mediaService.getAvatar(avatarPath))
 
         this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(avatarPath);
-
+        }
         this.cdr.detectChanges();
         // console.log(avatarPath,this.userAvatar)
       }

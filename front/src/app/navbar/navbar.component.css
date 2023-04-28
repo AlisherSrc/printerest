@@ -10,6 +10,13 @@ nav{
   justify-content: space-between;
   z-index: 100;
   padding: 10px;
+  width: 100%;
+}
+
+.icons{
+  display: flex;
+
+  margin-right: 20px;
 }
 
 .icon{
@@ -196,7 +203,9 @@ nav{
 
 }
 
-
+.hidden{
+  display: none;
+}
 
 
 

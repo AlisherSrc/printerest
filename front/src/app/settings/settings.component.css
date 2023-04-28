@@ -1,4 +1,6 @@
 body {
+
+
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
     margin: 0;
@@ -7,6 +9,8 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     height: 100vh;
+
+
   }
 
   form {
@@ -56,4 +60,12 @@ body {
 
   button[type="submit"]:focus {
     outline: none;
+  }
+
+  .error-email{
+    font-size: 17px;
+    font-weight: 700;
+    color:#ff0f0f;
+    text-shadow: rgb(255, 255, 255) 0px 0px 5px;
+    padding: 10px;
   }

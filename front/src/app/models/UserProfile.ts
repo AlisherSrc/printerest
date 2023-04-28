@@ -4,8 +4,8 @@ export interface UserProfile {
   user: User;
   phone?: string;
   email: string;
-  status: userStatus;
-  avatar: string;
+  status?: userStatus;
+  avatar?: string;
 }
 
 export const enum userStatus{

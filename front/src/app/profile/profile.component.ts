@@ -14,7 +14,7 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 export class ProfileComponent {
 
   userAvatar !: SafeUrl;
-  userName : string = "Cool user";
+  userName: string = "Cool user";
 
   currUser !: UserProfile;
 
@@ -29,13 +29,19 @@ export class ProfileComponent {
         console.log(user)
         this.userName = user.user.username
 
-
+        let userAvatarPath;
         // correcting a path
-        let userAvatarPath = this.mediaService.getPath(user.avatar);
-        // getting an avatar path from the backend side
-        userAvatarPath = await lastValueFrom(this.mediaService.getAvatar(userAvatarPath));
-        //  making this url safe
-        this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(userAvatarPath);
+        if (user.avatar) {
+          userAvatarPath = this.mediaService.getPath(user.avatar);
+        }
+
+        if (this.currUser.avatar && userAvatarPath) {
+
+          // getting an avatar path from the backend side
+          userAvatarPath = await lastValueFrom(this.mediaService.getAvatar(userAvatarPath));
+          //  making this url safe
+          this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(userAvatarPath);
+        }
       }
     })
 

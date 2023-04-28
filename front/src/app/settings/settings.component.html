@@ -5,26 +5,21 @@
   <link rel="stylesheet" type="text/css" href="settings.component.css">
 </head>
 <body>
-    <form>
+    <form #myForm="ngForm" (submit)="onSubmit()">
       <div class="input-container">
         <label for="username">Username </label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="username"  [(ngModel)]="username">
       </div>
       <div class="input-container">
         <label for="email">Email </label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" [(ngModel)]="email">
       </div>
-      <div class="input-container">
-        <label for="password">Password </label>
-        <input type="password" id="password" name="password" required>
-      </div>
-      <div class="input-container">
-        <label for="confirm-password">Confirm Password </label>
-        <input type="password" id="confirm-password" name="confirm-password" required>
-      </div>
+      <p class="error-email" *ngIf="emailError">Email is not valid!</p>
+      <p class="submited" *ngIf="isSubmited">Changed successfully!</p>
       <div>
         <button type="submit">Save Changes</button>
       </div>
+
     </form>
   </body>
   </html>
