@@ -1,6 +1,6 @@
 
 .photo{
-    background-color: rgb(229, 230, 222);
+  background: linear-gradient(#3939be, #f5f5f5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,54 +20,75 @@
    }
    
    input[type="text"], textarea {
-     display: block;
-     width: 100%;
-     padding: 10px;
-     border: none;
-     border-radius: 5px;
-     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-     transition: box-shadow 0.2s ease-in-out;
-   }
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgb(57, 57, 190);
+    transition: box-shadow 0.2s ease-in-out;
+    font-family: "Arial", "sans-serif";
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  input[type="text"]:focus, textarea:focus {
+    outline: none;
+    border-color: rgb(57, 57, 190);
+    box-shadow: 0 0 10px rgb(57, 57, 190);
+  }
+  
+  input[type="text"]::placeholder, textarea::placeholder {
+    color: #999;
+
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  input[type="submit"] {
+    background-color: rgb(57, 57, 190);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: "Arial", "sans-serif";
+  }
+  
+  input[type="submit"]:hover {
+    background-color: rgb(57, 57, 115);
+  }
    
-   input[type="text"]:focus, textarea:focus {
-     outline: none;
-     box-shadow: 0 0 10px #972bb8;
-   }
-   
-   textarea {
-     resize: none;
-   }
-   
-   #photo-url{
-    width: 80%;
-   }
+  
    #photo-container {
      float: left;
      margin-right: 20px;
    }
    
    button {
-     display: block;
-     width: 100px;
-     height: 50px;
-     padding: 10px;
-     border: none;
-     border-radius: 25px;
-     background-color: rgb(57,57,190);
-     color: #fff;
-     font-size: 18px;
-     font-weight: bold;
-     cursor: pointer;
+    padding: 10px 20px;
+    background-color: transparent; /* change background color to transparent */
+    color: rgb(57, 57, 190);
+    border: 1px solid rgb(57, 57, 190); /* add border property */
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 0 10px;
+  
    }
    
    button:hover {
-     background-color: rgb(57,57,115);
-   }
-   #text-line {
-     font-size: 20px;
-     padding: 15px;
-     height: 50px;
-     width: 80%;
+    background-color: rgb(57, 57, 190);
+    color: #fff;
+    border-radius: 20px;
+    
    }
    
    #photo-description {
@@ -115,7 +136,7 @@
      color: #fff;
      font-size: 18px;
      text-align: center;
-     font-family: "Youtube Sans", "Roboto", "sans-serif";
+     font-family: "Arial", "sans-serif";
    }
    
    #photo-container:hover {
@@ -130,7 +151,24 @@
      top:0;
      right: 0;
    }
+   
    #all{
      display: flex;
      justify-content: space-between;
    }
+   .photo-upload-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(57, 57, 190);
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 0 10px;
+    font-size: 18px;
+    text-align: center;
+    font-family: "Arial", "sans-serif";
+  }
+  
+  .photo-upload-label:hover {
+    background-color: rgb(57, 57, 115);
+  }

@@ -32,6 +32,36 @@ throw new Error('Method not implemented.');
       this.isPhotoUploaded = false;
     }
   }
+  public isDragOver = false;
+
+onDragOver(event: DragEvent) {
+  event.preventDefault();
+  this.isDragOver = true;
+}
+
+onDragLeave(event: DragEvent) {
+  event.preventDefault();
+  this.isDragOver = false;
+}
+
+onDrop(event: DragEvent) {
+  event.preventDefault();
+  this.isDragOver = false;
+  const file = event.dataTransfer?.files?.[0];
+  if (file && (file.type === "image/jpeg" || file.type === "image/png" ||  file.type === "image/gif")) {
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.photoPreview = event.target.result;
+      this.isPhotoUploaded = true;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    this.photoPreview = '';
+    this.isPhotoUploaded = false;
+  }
+}
+
+
 
   deletePhoto() {
     this.photoPreview = '';

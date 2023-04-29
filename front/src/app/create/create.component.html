@@ -1,25 +1,26 @@
 <div class="photo">
-    <div class="create">
-      <form class="file_getter">
-        <div class="file_getter" id="all">
-          <div *ngIf="!isPhotoUploaded" class="photo-container-wrapper">
-            <input type="file" id="photo-container" name="photo-container"  (change)="onFileSelected($event)">
+  <div class="create">
+    <form class="file_getter">
+      <div class="file_getter" id="all">
+        <div class="photo-container-wrapper">
+          <div id="photo-dropzone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+            <p>Drag and drop image here</p>
+            <p>or</p>
+            <label for="photo-upload-input" class="photo-upload-label">Click to select file</label>
+            <input type="file" id="photo-upload-input" name="photo-container" (change)="onFileSelected($event)">
           </div>
-          <div *ngIf="isPhotoUploaded" class="photo-container-wrapper">
-            <div class="photo-preview-wrapper">
-              <img id="selected-photo" [src]="photoPreview">
-              <button (click)="deletePhoto()">Delete</button>
-            </div>
-          </div>
-          <div id='desc'>
-            <input type="text" id="text-line" name="text-line" [(ngModel)]="textLine" placeholder="Add name" class="input-glow"><br><br>
-            <textarea id="photo-description" name="photo-description" rows="4" cols="50" [(ngModel)]="photoDescription" placeholder="Add Description" class="input-glow"></textarea><br><br>
-            <textarea id="photo-url" name="photo-url" rows="1" cols="5" [(ngModel)]="photoUrl" placeholder="Content Url" class="input-glow"></textarea><br><br>
-            
-            <button type="button" (click)="saveData()">Save</button>
+          <div *ngIf="isPhotoUploaded" class="photo-preview-wrapper">
+            <img id="selected-photo" [src]="photoPreview">
+            <button (click)="deletePhoto()">Delete</button>
           </div>
         </div>
-      </form>
-    </div>
+        <div id='desc'>
+          <input type="text" id="text-line" name="text-line" [(ngModel)]="textLine" placeholder="Add name" class="input-glow"><br><br>
+          <textarea id="photo-description" name="photo-description" rows="4" cols="50" [(ngModel)]="photoDescription" placeholder="Add Description" class="input-glow"></textarea><br><br>
+          <textarea id="photo-url" name="photo-url" rows="1" cols="5" [(ngModel)]="photoUrl" placeholder="Content Url" class="input-glow"></textarea><br><br>
+          <button type="button" (click)="saveData()">Save</button>
+        </div>
+      </div>
+    </form>
   </div>
-  
+</div>
