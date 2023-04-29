@@ -23,7 +23,7 @@ export class ProfileComponent {
     private sanitizer: DomSanitizer) {
 
     this.userService.curr_user.subscribe(async (user) => {
-      if (user) {
+      if (user && user.user && user.user.username) {
         // getting a current user
         this.currUser = user;
         console.log(user)

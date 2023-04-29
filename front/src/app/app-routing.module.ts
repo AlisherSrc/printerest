@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
+import { CreateComponent } from './create/create.component';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path:'home',component:HomeComponent},
   {path: 'profile',component:ProfileComponent},
   {path: 'settings',component:SettingsComponent},
+  {path: 'pin-builder',component:CreateComponent},
   {path:'**',component:NotfoundComponent}
 ];
 

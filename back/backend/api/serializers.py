@@ -66,12 +66,28 @@ class PinSerializer(serializers.Serializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(read_only=True)
     avatar = serializers.ImageField(read_only=True)  # Make 'avatar' field read-only
+    email = serializers.EmailField(read_only=True)
 
     class Meta:
         model = UserProfile
         fields = ('user','email','avatar')
+
+    def to_internal_value(self, data):
+        user_data = data.get('user')
+        email = data.get('email')
+        # Add any additional fields that need to be processed here
+
+        validated_data = super().to_internal_value(data)
+
+        if user_data:
+            validated_data['user'] = user_data
+        if email:
+            validated_data['email'] = email
+        # Add any additional fields to the validated_data dictionary
+
+        return validated_data
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
@@ -81,13 +97,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return profile
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user')
-        user = instance.user
-        for key, value in user_data.items():
-            setattr(user, key, value)
-        user.save()
+        user_data = validated_data.pop('user', None)
+        email = validated_data.pop('email', None)
+
+        if user_data:
+            user = instance.user
+            for key, value in user_data.items():
+                setattr(user, key, value)
+            user.save()
+
+        if email:
+            setattr(instance, 'email', email)
+
         for key, value in validated_data.items():
             setattr(instance, key, value)
+
         instance.save()
         return instance
 

@@ -19,7 +19,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './AuthInterceptor';
 import { SettingsComponent } from './settings/settings.component';
-
+import { CreateComponent } from './create/create.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,8 @@ import { SettingsComponent } from './settings/settings.component';
     HeaderComponent,
     ProfileComponent,
     LoginComponent,
-    SettingsComponent
+    SettingsComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,

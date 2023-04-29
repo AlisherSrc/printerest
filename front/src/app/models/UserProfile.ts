@@ -1,9 +1,9 @@
 import { User } from "./User";
 
 export interface UserProfile {
-  user: User;
+  user?: User;
   phone?: string;
-  email: string;
+  email?: string;
   status?: userStatus;
   avatar?: string;
 }

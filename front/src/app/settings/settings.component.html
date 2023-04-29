@@ -5,6 +5,7 @@
   <link rel="stylesheet" type="text/css" href="settings.component.css">
 </head>
 <body>
+    <!-- <p>Warning! If you change your username, then you will be logged out and </p> -->
     <form #myForm="ngForm" (submit)="onSubmit()">
       <div class="input-container">
         <label for="username">Username </label>
@@ -14,8 +15,13 @@
         <label for="email">Email </label>
         <input type="email" id="email" name="email" [(ngModel)]="email">
       </div>
-      <p class="error-email" *ngIf="emailError">Email is not valid!</p>
+      <p class="error" *ngIf="emailError">Email is not valid</p>
+      <p class="error" *ngIf="emailAlreadyRegError">Email is already registered</p>
+      <p class="error" *ngIf="usernameAlreadyRegError">Username is already registered</p>
+      <p class="error" *ngIf="unexpectedError">Unexpected error has occured! Please contact us if you face this error further!</p>
+
       <p class="submited" *ngIf="isSubmited">Changed successfully!</p>
+
       <div>
         <button type="submit">Save Changes</button>
       </div>

@@ -17,6 +17,11 @@ export class SettingsComponent {
   user !: UserProfile;
 
   emailError: boolean;
+  emailAlreadyRegError : boolean;
+
+  usernameAlreadyRegError: boolean;
+  unexpectedError: boolean;
+
 
   isSubmited: boolean;
 
@@ -26,6 +31,9 @@ export class SettingsComponent {
     this.email = "";
     this.emailError = false;
     this.isSubmited = false;
+    this.emailAlreadyRegError = false;
+    this.usernameAlreadyRegError = false;
+    this.unexpectedError = false;
 
     this.userService.curr_user.subscribe((user) => {
       const currentUser = user;
@@ -50,6 +58,9 @@ export class SettingsComponent {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email validation
     const isEmailValid = emailRegex.test(this.email);
 
+
+
+
     if (!isEmailValid && this.email !== "") {
       // Email is not valid, handle the error or display a message
       console.warn('Invalid email');
@@ -59,28 +70,84 @@ export class SettingsComponent {
       this.emailError = false;
     }
 
-    const inputUser: UserProfile = {
-      user: {
-        username: this.username ? this.username : this.user.user.username
-      },
-      email: this.email ? this.email : this.user.email,
-    };
+    let inputUser: UserProfile | null = null; // Initialize the variable with a default value
 
-    this.userService.updateUser(this.user.user.username, inputUser).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.error(error)
+
+    if (this.user.user && this.user.user.username) {
+
+      if (this.username === "") {
+        // If this email is already in our database then we show an error
+        if(this.email === this.user.email){
+          this.emailAlreadyRegError = true;
+          return;
+        }else{
+          this.emailAlreadyRegError = false;
+        }
+
+        inputUser = {
+          user:{},
+          email: this.email
+        };
+      }else if(this.email === ""){
+        // Same verification as above but this time this is for username
+        if(this.username === this.user.user.username){
+          this.usernameAlreadyRegError = true;
+          return;
+        }else{
+          this.usernameAlreadyRegError = false;
+        }
+
+        inputUser = {
+          user: {
+            username: this.username
+          }
+        }
+
+      }else if(this.username !== "" && this.email !== "") {
+        // Same verification as above but this time this is for both of them
+        if(this.username === this.user.user.username){
+          this.usernameAlreadyRegError = true;
+          return;
+        }else{
+          this.usernameAlreadyRegError = false;
+        }
+
+        if(this.email === this.user.email){
+          this.emailAlreadyRegError = true;
+          return;
+        }else{
+          this.emailAlreadyRegError = false;
+        }
+
+        inputUser = {
+          user: {
+            username: this.username
+          },
+          email: this.email
+        };
+      }else{
+        inputUser = {}
+        console.error("Unexpected error while creating an input user in onSubmit")
+        return;
       }
-    );
 
+      this.userService.updateUser(this.user.user.username, inputUser).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.error(error)
+        }
+      );
+
+      // console.log("Hello!")
+    }
 
     // After user changes his username we should update it in local storage as well as token for it, because we login and
     // retrieve user using username
     const password = localStorage.getItem('password');
     let data;
-    if (password) {
+    if (password && this.username != "") {
       data = await lastValueFrom(this.auth.login(this.username, password));
 
 
@@ -88,12 +155,10 @@ export class SettingsComponent {
       localStorage.setItem('username', this.username);
       await this.userService.setCurrentUsername(this.username);
 
-      this.isSubmited = true;
-
     }
 
-
-    console.log(data, this.username);
+    this.isSubmited = true;
+    console.log(inputUser, this.username);
   }
 
 

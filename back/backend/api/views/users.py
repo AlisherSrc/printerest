@@ -48,9 +48,14 @@ class UserProfileView(APIView):
     def put(self, request, username):
         profile = self.get_object(username)
         serializer = UserProfileSerializer(profile, data=request.data)
+
         if serializer.is_valid():
+
             serializer.save()
+            # print("Request data:", request.data)  # Add this line everything is fine here
+            # print("Serializer data:", serializer.data)  # Add this line
             return Response(serializer.data)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, username):
