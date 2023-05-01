@@ -25,6 +25,12 @@ export class PinsService {
     )
   }
 
+  getPinsByUser(username : string) : Observable<Pin[]>{
+    return this.client.get<Pin[]>(
+      `${BASE_URL}/api/pins/${username}`
+    )
+  }
+
   // getPins = () : Pin[] => {
   //   return pins;
   // }

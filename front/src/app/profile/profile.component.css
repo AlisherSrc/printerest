@@ -4,17 +4,17 @@ body {
     margin: 0;
     padding: 0;
   }
-  
+
   header {
     background-color: transparent;
-    
+
     padding: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
+
   header .profile-pic {
     display: block;
     margin: 0 auto;
@@ -23,12 +23,12 @@ body {
     height: 200px;
     object-fit: cover;
   }
-  
+
   header h1 {
     margin-top: 20px;
     margin-bottom: 10px;
   }
-  
+
   header button {
     background-color: transparent;
     color: black;
@@ -37,19 +37,19 @@ body {
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
   header button:hover {
     background-color: black;
     color: white;
   }
-  
+
   section {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px;
   }
-  
+
   .card {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -59,7 +59,7 @@ body {
     width: 300px;
     text-align: center;
   }
-  
+
   .card img {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -67,33 +67,58 @@ body {
     object-fit: cover;
     width: 100%;
   }
-  
+
   .card h3 {
     font-size: 18px;
     margin: 10px;
     text-align: center;
   }
-  
+
   .card p {
     font-size: 14px;
     margin: 10px;
     text-align: center;
+
+    cursor: pointer;
   }
-  
+
+  .show-more-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    background-color: rgba(220, 220, 220, 0.2);
+    height: 200px;
+    width: 200px;
+
+
+    position: relative;
+    /* backdrop-filter: invert(80%); */
+    /* backdrop-filter: brightness(0%); */
+    backdrop-filter: blur(15px);
+    /* -webkit-backdrop-filter: blur(15px); */
+    cursor: pointer;
+
+  }
+
+  .show-more-card img{
+    width: 50px;
+    height: 50px;
+  }
   .section-title {
     font-size: 24px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
   }
-  
+
   .switch-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 10px;
   }
-  
+
   .switch-btn button {
     padding: 10px 20px;
     background-color: transparent; /* change background color to transparent */
@@ -103,7 +128,7 @@ body {
     cursor: pointer;
     margin: 0 10px;
   }
-  
+
   .switch-btn button.active {
     background-color: #000;
     color: #fff;

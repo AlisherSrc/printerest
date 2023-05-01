@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthToken } from './models/Auth';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BASE_URL } from './globals';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class AuthService {
   // In order to be notified when setLoggedIn() method is called
   private loggedin = new BehaviorSubject<boolean>(false);
 
+  
 
 
   constructor(private http : HttpClient) {

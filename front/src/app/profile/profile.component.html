@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>My Profile</title>
   <link rel="stylesheet" type="text/css" href="profile.component.css">
 </head>
+
 <body>
-    <header>
+  <header>
     <img class="profile-pic" [src]="userAvatar ||'https://picsum.photos/200'" alt="Profile Picture">
     <h1>@{{userName}}</h1>
     <button routerLink="/settings">Change Profile</button>
@@ -16,16 +18,21 @@
   </header>
   <section id="created-pins" *ngIf="activeSection === 'created'">
     <h2 class="section-title">Created Pins</h2>
-    <div class="card">
-      <img src="https://picsum.photos/300/200" alt="Pin Image">
-      <h3>Pin Title</h3>
-      <p>Pin Description</p>
+
+    <div class="card" *ngFor="let pin of usersPins.slice(0,2)" >
+      <img src="{{pin.contentUrl}}" alt="Pin Image">
+      <h3>{{pin.title}}</h3>
+      <p>{{pin.description}}</p>
     </div>
-    <div class="card">
-      <img src="https://picsum.photos/300/200" alt="Pin Image">
-      <h3>Pin Title</h3>
-      <p>Pin Description</p>
+
+
+    <div>
+      <div class="card show-more-card" routerLink="/albums/{{userName}}">
+        <h3>Show More</h3>
+        <img src="./../../assets/images/plus-icon.svg">
+      </div>
     </div>
+
   </section>
   <section id="saved-pins" *ngIf="activeSection === 'saved'">
     <h2 class="section-title">Saved Pins</h2>
@@ -41,4 +48,5 @@
     </div>
   </section>
 </body>
+
 </html>

@@ -129,6 +129,7 @@ nav{
   border-radius: 10px;
   cursor: pointer;
 }
+
 .navbar-createmenu__item:hover{
   background-color: var(--gray);
 }

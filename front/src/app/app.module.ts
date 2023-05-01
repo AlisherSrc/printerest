@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './AuthInterceptor';
 import { SettingsComponent } from './settings/settings.component';
 import { CreateComponent } from './create/create.component';
+import { AlbumComponent } from './album/album.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CreateComponent } from './create/create.component';
     ProfileComponent,
     LoginComponent,
     SettingsComponent,
-    CreateComponent
+    CreateComponent,
+    AlbumComponent
   ],
   imports: [
     BrowserModule,

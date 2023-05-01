@@ -5,6 +5,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { CreateComponent } from './create/create.component';
+import { AlbumComponent } from './album/album.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'profile',component:ProfileComponent},
   {path: 'settings',component:SettingsComponent},
   {path: 'pin-builder',component:CreateComponent},
+  {path: 'albums/:username',component:AlbumComponent},
   {path:'**',component:NotfoundComponent}
 ];
 

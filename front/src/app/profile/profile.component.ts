@@ -5,6 +5,8 @@ import { User } from '../models/User';
 import { UserProfile } from '../models/UserProfile';
 import { lastValueFrom } from 'rxjs';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
+import { Pin } from '../models/Pin';
+import { PinsService } from '../pins-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,12 +17,15 @@ export class ProfileComponent {
 
   userAvatar !: SafeUrl;
   userName: string = "Cool user";
+  usersPins : Pin[] = [];
 
   currUser !: UserProfile;
 
+
   constructor(private userService: UserService,
     private mediaService: MediaService,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    private pinService: PinsService) {
 
     this.userService.curr_user.subscribe(async (user) => {
       if (user && user.user && user.user.username) {
@@ -42,6 +47,14 @@ export class ProfileComponent {
           //  making this url safe
           this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(userAvatarPath);
         }
+
+        // getting pins of this user
+        let curr_pins = await lastValueFrom(this.pinService.getPinsByUser(this.userName))
+
+        if(curr_pins){
+          this.usersPins = curr_pins;
+        }
+
       }
     })
 
