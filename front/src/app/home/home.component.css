@@ -3,14 +3,6 @@
 }
 
 .pin{
-  /* position: relative; */
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* overflow: hidden; */
-
-  /* max-width: 16vw;
-  max-height: 50vh; */
   transform: scale(1);
   margin: 10px;
   z-index: 0;
@@ -22,49 +14,6 @@
   grid-auto-rows: auto;
 
 }
-
-.pin-container{
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.pin-container:hover img{
-  filter:brightness(0.5)
-}
-
-.pin-container:hover button{
-  display: block;
-}
-
-.save-button{
-  display: none;
-  position: absolute;
-  width: 100px;
-  height: 50px;
-  top:0;
-  left: 0;
-  z-index: 3;
-  cursor: pointer;
-  border: none;
-  background-color: var(--blue);
-  color:var(--white);
-  margin-left: 50%;
-  margin-top: 5px;
-}
-
-.save-button:hover{
-  filter: brightness(0.9);
-}
-/* When hovers, it applies this to the .save-button, it would do it to itself if it is not specified */
-.pin-container:hover .save-button{
-  display: inline;
-}
-
-
 
 .loader {
   display: flex;

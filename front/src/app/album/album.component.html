@@ -1,8 +1,22 @@
 <div>
-  <section>
+  <section class="title">
     <h1>{{album ? album.name : "Something went wrong"}}</h1>
   </section>
-  <section>
 
+  <section *ngIf="album">
+    <div class="pins_head">
+      <p>{{album.pins?.length}} Pins</p>
+    </div>
+    <div class="pins">
+      <div class="pin-container" *ngFor="let pin of album.pins" >
+        <app-pin [pin]=pin/>
+      </div>
+    </div>
   </section>
 </div>
+<!-- <div class="pin" *ngFor="let pin of pins" (mouseenter)="onPinHover(pin)" (mouseleave)="onPinLeave(pin)">
+      <div class="pin-container">
+        <img [src]=pin.contentUrl>
+        <button class="save-button">Save</button>
+      </div>
+    </div> -->

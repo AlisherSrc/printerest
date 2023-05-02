@@ -9,7 +9,9 @@ import { Pin } from '../models/Pin';
 export class PinComponent {
   @Input() pin !: Pin; // can cause "undefined" error
 
-  constructor(){
+  inAlbum : boolean;
 
+  constructor(){
+    this.inAlbum = false;
   }
 }
