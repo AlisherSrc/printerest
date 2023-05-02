@@ -66,13 +66,14 @@ class PinSerializer(serializers.Serializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     user = UserSerializer(read_only=True)
     avatar = serializers.ImageField(read_only=True)  # Make 'avatar' field read-only
     email = serializers.EmailField(read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = ('user','email','avatar')
+        fields = ('id','user','email','avatar')
 
     def to_internal_value(self, data):
         user_data = data.get('user')

@@ -1,6 +1,7 @@
 import { User } from "./User";
 
 export interface UserProfile {
+  id?:number,
   user?: User;
   phone?: string;
   email?: string;

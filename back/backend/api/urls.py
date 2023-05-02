@@ -12,5 +12,6 @@ urlpatterns = [
     path('media/<path:path>',views.serve_avatar),
     path('albums/',views.Albums.as_view()),
     path('albums/<int:id>',views.album),
-    path('albums/<str:username>',views.get_albums_by_user)
+    path('albums/<str:username>',views.get_albums_by_user),
+    path('albums/<str:username>/<str:albumname>',views.get_album_by_name)
 ]

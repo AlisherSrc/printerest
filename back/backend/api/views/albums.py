@@ -66,3 +66,12 @@ def get_albums_by_user(request,username):
     albums = AlbumSerializer(albums_obj,many=True)
 
     return Response(albums.data)
+
+@api_view(['GET'])
+def get_album_by_name(request,username,albumname):
+    user_obj = User.objects.get(username=username)
+    album_obj = Album.objects.get(name=albumname,user=user_obj.id)
+
+    album = AlbumSerializer(album_obj)
+
+    return Response(album.data)
