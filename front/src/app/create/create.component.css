@@ -125,7 +125,9 @@
      max-width: 300px;
      max-height: 100%;
    }
-   
+   #photo-tag{
+    margin-bottom: 1px;
+   }
    #photo-container {
      display: inline-block;
      padding: 6px 12px;
