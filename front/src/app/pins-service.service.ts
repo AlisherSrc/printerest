@@ -31,6 +31,14 @@ export class PinsService {
     )
   }
 
+  //
+  postPin(pin: Pin): Observable<Pin>{
+    return this.client.post<Pin>(
+      `${BASE_URL}/api/pins/`,
+      pin
+    )
+  }
+
   // getPins = () : Pin[] => {
   //   return pins;
   // }

@@ -3,7 +3,7 @@ import { Tag } from "./Tag";
 import { User } from "./User";
 
 export interface Pin{
-  id: number,
+  id?: number,
   title: string,
   description?: string,
   contentUrl : string,
