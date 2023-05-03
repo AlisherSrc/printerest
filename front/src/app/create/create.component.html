@@ -3,7 +3,7 @@
     <form class="file_getter">
       <div class="file_getter" id="all">
         <div class="photo-container-wrapper">
-          <div id="photo-dropzone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+          <div *ngIf="!isPhotoUploaded" id="photo-dropzone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
             <p>Drag and drop image here</p>
             <p>or</p>
             <label for="photo-upload-input" class="photo-upload-label">Click to select file</label>
@@ -18,8 +18,9 @@
           <input type="text" id="text-line" name="text-line" [(ngModel)]="textLine" placeholder="Add name" class="input-glow"><br><br>
           <textarea id="photo-description" name="photo-description" rows="4" cols="50" [(ngModel)]="photoDescription" placeholder="Add Description" class="input-glow"></textarea><br><br>
           <textarea id="photo-url" name="photo-url" rows="1" cols="5" [(ngModel)]="photoUrl" placeholder="Content Url" class="input-glow"></textarea><br><br>
-          <textarea id="photo-tag" name="photo-tag" rows="1" cols="5" [(ngModel)]="tags" placeholder="Add some tags" class="input-glow"></textarea><br><br>
-          <p>add tags using commas( like "tag1, tag2" )</p>
+          <textarea id="photo-tag" name="photo-tag" rows="1" cols="5" [(ngModel)]="tags" placeholder="Add some tags" class="input-glow"></textarea>
+          <p id="tags-instructions">Add tags using commas (e.g. "tag1, tag2")</p>
+         
           <button type="button" (click)="saveData()">Save</button>
         </div>
       </div>
