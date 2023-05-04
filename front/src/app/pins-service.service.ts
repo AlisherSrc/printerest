@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pin } from './models/Pin';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError } from 'rxjs';
 import { BASE_URL } from './globals';
 
 @Injectable({
@@ -11,6 +11,14 @@ export class PinsService {
   constructor(private client: HttpClient) {
     // this.pins = pins;
   }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      // 'Content-Type':  'application/json',
+      'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+    })
+  }
+
 
   getPin(id: number):Observable<Pin>{
     return this.client.get<Pin>(
@@ -32,24 +40,15 @@ export class PinsService {
   }
 
   //
-  postPin(pin: Pin): Observable<Pin>{
+  postPin(pin: FormData): Observable<Pin>{
     return this.client.post<Pin>(
       `${BASE_URL}/api/pins/`,
       pin
+    ).pipe(
+      catchError((error : any) => {
+        throw error;
+      })
     )
   }
-
-  // getPins = () : Pin[] => {
-  //   return pins;
-  // }
-
-  // addPin = (pin : Pin) => {
-  //   pins.push(pin)
-  // }
-
-  // deletePin = (pinId : number) => {
-  //   const newPins = pins.filter((pin) => pin.id != pinId)
-  //   this.pins = newPins;
-  // }
 
 }

@@ -17,7 +17,7 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=255,blank=True,null=True)
     email = models.EmailField()
     status = models.CharField(max_length=10,choices=USER_STATUS_CHOICES, default="active")
-    avatar = models.ImageField(upload_to='avatars/')
+    avatar = models.ImageField(upload_to='media/avatars/',blank=True)
 
 
     # when we will make auth, here will be the password as well
@@ -36,13 +36,14 @@ class Tag(models.Model):
 
 
 class Pin(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255,blank=True,null=True)
     description = models.TextField(blank=True,null=True)
-    contentUrl = models.URLField()
-    timeUploaded = models.DateTimeField()
+    contentUrl = models.URLField(blank=True,null=True,default='')
+    content = models.ImageField(blank=True,null=True, upload_to='media/pins')
+    timeUploaded = models.DateTimeField(null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag)
-    destinationLink = models.URLField()
+    tags = models.ManyToManyField(Tag,blank=True)
+    destinationLink = models.URLField(default='',blank=True,null=True)
 
     #     title = serializers.CharField()
     #     description = serializers.CharField()
