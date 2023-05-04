@@ -3,6 +3,7 @@ import { Pin } from '../models/Pin';
 import { MediaService } from '../media.service';
 import { lastValueFrom } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pin',
@@ -15,7 +16,8 @@ export class PinComponent {
   inAlbum : boolean;
 
   constructor(private mediaService : MediaService,
-    private sanitizer: DomSanitizer){
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute){
     this.inAlbum = false;
   }
 
@@ -28,11 +30,13 @@ export class PinComponent {
       const pinContent = await lastValueFrom(
         this.mediaService.getMedia('media/pins/' + this.pin.contentUrl)
       );
-      const safePinContentUrl: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(pinContent);
       if (pinContent){
         this.pin.contentUrl = this.sanitizer.bypassSecurityTrustUrl(pinContent);
         console.log(pinContent);
       }
     }
   }
+
+
+
 }

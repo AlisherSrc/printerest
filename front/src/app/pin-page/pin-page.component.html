@@ -1,0 +1,18 @@
+<div>
+  <section class="pin_container">
+    <div class="pin">
+      <div class="pin__left">
+        <img src="{{currPin?.contentUrl}}">
+      </div>
+      <div class="pin__right">
+        <h1>{{currPin?.title}}</h1>
+        <p>{{currPin?.description}}</p>
+        <div>
+          {{pinUser?.user?.username}}
+          <img [src]=pinUserAvatar>
+        </div>
+        <p>{{currPin?.destinationLink}}</p>
+      </div>
+    </div>
+  </section>
+</div>

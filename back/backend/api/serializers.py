@@ -28,52 +28,12 @@ class PinSerializer(serializers.Serializer):
     content = serializers.ImageField(required=False)
     timeUploaded = serializers.DateTimeField(allow_null=True)
     # It will not show up in response
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    # user = UserSerializer(read_only=True)
+    # user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    user = UserSerializer(read_only=True)
     # For using existing user without creating a new one
     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     tags = TagSerializer(many=True,required=False )
     destinationLink = serializers.URLField(required=False, allow_blank=True)
-    #
-    # def create(self, request, *args, **kwargs):
-    #     # Get the form data and uploaded file
-    #     title = request.POST.get('title')
-    #     description = request.POST.get('description')
-    #     content = request.FILES.get('content')
-    #     destination_link = request.POST.get('destinationLink')
-    #     tags = request.POST.getlist('tags')
-    #     user = request.POST.get('user')
-    #
-    #     print("TITLE" + title)
-    #     # Create a new Pin instance
-    #     pin = Pin(
-    #         title=title,
-    #         description=description,
-    #         contentUrl='',  # Placeholder value, will be updated later
-    #         content=content,
-    #         timeUploaded=timezone.now(),  # Set the current timestamp
-    #         destinationLink=destination_link,
-    #         user=user
-    #     )
-    #
-    #     # Save the uploaded file
-    #     if content:
-    #         fs = FileSystemStorage(location='media/pins')
-    #         filename = fs.save(content.name, content)
-    #         saved_image_url = fs.url(filename)
-    #         pin.contentUrl = saved_image_url
-    #
-    #     # Save the Pin object
-    #     pin.save()
-    #
-    #     # Update the tags
-    #     for tag_name in tags:
-    #         tag, _ = Tag.objects.get_or_create(name=tag_name)
-    #         pin.tags.add(tag)
-    #
-    #     # Serialize the Pin object
-    #     serializer = self.get_serializer(pin)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def create(self, validated_data):
         # Getting user

@@ -21,6 +21,7 @@ import { AuthInterceptor } from './AuthInterceptor';
 import { SettingsComponent } from './settings/settings.component';
 import { CreateComponent } from './create/create.component';
 import { AlbumComponent } from './album/album.component';
+import { PinPageComponent } from './pin-page/pin-page.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AlbumComponent } from './album/album.component';
     LoginComponent,
     SettingsComponent,
     CreateComponent,
-    AlbumComponent
+    AlbumComponent,
+    PinPageComponent
   ],
   imports: [
     BrowserModule,
