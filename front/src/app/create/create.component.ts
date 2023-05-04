@@ -46,6 +46,8 @@ export class CreateComponent {
 
 
   onFileSelected(event: Event) {
+    this.isPhotoUploaded = true;
+
     const file = (event.target as HTMLInputElement).files?.[0];
 
     if (file && (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/gif")) {
@@ -73,7 +75,7 @@ export class CreateComponent {
     event.preventDefault();
     this.isDragOver = false;
   }
-
+  
   onDrop(event: DragEvent) {
     event.preventDefault();
     this.isDragOver = false;
