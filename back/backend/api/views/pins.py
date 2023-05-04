@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.core.files.storage import FileSystemStorage
 from django.utils import timezone
@@ -112,7 +113,12 @@ class Pins(generics.ListCreateAPIView):
 
         print(username[1:-1])
 
-
+        # Save the uploaded image file to a specific location within the static files directory
+        # content_path = os.path.join('pins', content.name)
+        # content_full_path = os.path.join(settings.STATIC_ROOT, content_path)
+        # with open(content_full_path, 'wb') as f:
+        #     for chunk in content.chunks():
+        #         f.write(chunk)
 
         # Create a new Pin object
         pin = Pin(

@@ -16,14 +16,14 @@ export class MediaService {
               private sanitizer: DomSanitizer) {
   }
 
-  getAvatar(path: string): Observable<string> {
+  getMedia(path: string): Observable<string> {
     // console.log(`${BASE_URL}api/media/${path}`)
     return this.http.get(`${BASE_URL}/api/media/${path}`, { responseType: 'blob' })
       .pipe(map(res => {
         // console.log(res);
         return URL.createObjectURL(res);
       }), catchError((error, caugth) => {
-        console.error(`Error loading avatar image: ${error}`);
+        console.error(`Error loading image: ${error}`);
         return of("error");
       })
       )

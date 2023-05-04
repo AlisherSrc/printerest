@@ -14,5 +14,5 @@ from backend import settings
 
 def serve_avatar(request,path):
     file_path = f"{settings.MEDIA_ROOT}/{path}"
-    print(file_path)
+    print("File path:" + file_path)
     return serve(request,path,document_root=settings.MEDIA_ROOT)

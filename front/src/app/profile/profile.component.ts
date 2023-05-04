@@ -43,7 +43,7 @@ export class ProfileComponent {
         if (this.currUser.avatar && userAvatarPath) {
 
           // getting an avatar path from the backend side
-          userAvatarPath = await lastValueFrom(this.mediaService.getAvatar(userAvatarPath));
+          userAvatarPath = await lastValueFrom(this.mediaService.getMedia(userAvatarPath));
           //  making this url safe
           this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(userAvatarPath);
         }

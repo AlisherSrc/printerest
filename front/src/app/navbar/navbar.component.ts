@@ -72,7 +72,7 @@ export class NavbarComponent {
         // It will wait until the end of this promise so it will return not Promise but a string
         if(this.currUser.avatar && avatarPath){
 
-        avatarPath = await lastValueFrom(this.mediaService.getAvatar(avatarPath))
+        avatarPath = await lastValueFrom(this.mediaService.getMedia(avatarPath))
 
         this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(avatarPath);
         }
