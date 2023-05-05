@@ -1,0 +1,51 @@
+.pin_container{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.pin{
+  display: flex;
+  margin-top: 3%;
+  width: 80%;
+
+}
+
+
+.pin__left{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.pin__left img{
+  border-radius: 10px 0px 0px 10px;
+}
+
+.pin__right{
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  gap: 3%;
+  background-color: var(--white);
+  padding: 10px;
+  border-radius: 0px 10px 10px 0px;
+}
+.pin_user_info{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1%;
+}
+
+.pin_user_info img{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+.pin_user_info p{
+  font-size: 1.5em;
+}

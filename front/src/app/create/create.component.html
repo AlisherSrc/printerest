@@ -3,7 +3,8 @@
     <form class="file_getter">
       <div class="file_getter" id="all">
         <div class="photo-container-wrapper">
-          <p class="error" *ngIf="photoError">Please, make sure that you submit supported format(.jpg,.png,.gif)</p>
+          <p class="error" *ngIf="photoError">Please, make sure that you submit supported format(.jpeg,.png,.gif)</p>
+          <p class="error" *ngIf="photoNotUploadedError">Please,upload your pin image(.png,.jpeg,.gif)</p>
           <div *ngIf="!isPhotoUploaded" id="photo-dropzone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
             <p>Drag and drop image here</p>
             <p>or</p>
@@ -28,6 +29,7 @@
           <button *ngIf="!editMode" type="button" (click)="saveData()">Save</button>
           <button *ngIf="editMode" type="button" (click)="editData()">Edit</button>
           <button *ngIf="editMode" (click)="deleteData()" >Delete Pin</button>
+          <p *ngIf="submitted" class="success-text">Success!<img src="./../../assets/images/success-icon.svg"></p>
         </div>
       </div>
     </form>

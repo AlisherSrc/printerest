@@ -220,3 +220,17 @@
     color: #ff0f0f;
     font-size: 1em;
   }
+
+  .success-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 10px;
+    color: black;
+    font-size: 1em;
+  }
+
+  .success-text img{
+    width: 20px;
+  }

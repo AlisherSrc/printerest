@@ -55,14 +55,12 @@ class PinSerializer(serializers.Serializer):
         return pin
 
     def update(self, instance, validated_data):
-
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.contentUrl = validated_data.get('contentUrl', instance.contentUrl)
         instance.content = validated_data.get('content',instance.content)
         instance.timeUploaded = validated_data.get('timeUploaded', instance.timeUploaded)
         tags_data = validated_data.get('tags')
-        print("Instance content" + str(instance.content))
 
 
 
@@ -71,6 +69,7 @@ class PinSerializer(serializers.Serializer):
             for tag_data in tags_data:
                 tag, _ = Tag.objects.get_or_create(name=tag_data['name'])
                 instance.tags.add(tag)
+                print("Hi")
         instance.destinationLink = validated_data.get('destinationLink', instance.destinationLink)
         instance.save()
         return instance

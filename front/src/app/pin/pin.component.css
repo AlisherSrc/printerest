@@ -1,3 +1,5 @@
+@import url("./../animations.css");
+
 *{
   border-radius: 30px;
 }
@@ -13,8 +15,16 @@
   max-height: 100vh;
 }
 
+.pin:hover{
+  animation-name: cast-shadow;
+  animation-duration: 100ms;
+  animation-fill-mode: forwards;
+}
+
 .pin:hover img{
-  filter:brightness(0.5)
+  animation-name: lower-brightness;
+  animation-duration: 250ms;
+  animation-fill-mode: forwards;
 }
 
 .pin:hover button{
@@ -33,7 +43,7 @@
   border: none;
   background-color: var(--blue);
   color:var(--white);
-  margin-left: 50%;
+  margin-left: 10px;
   margin-top: 5px;
 }
 

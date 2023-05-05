@@ -1,0 +1,47 @@
+
+@keyframes lower-brightness {
+  0%{
+    filter: brightness(0.9);
+
+  }
+  25%{
+    filter: brightness(0.85);
+
+  }
+  50%{
+    filter: brightness(0.8);
+
+  }
+  75%{
+    filter: brightness(0.75);
+
+  }
+  100%{
+    filter: brightness(0.7);
+
+  }
+}
+
+@keyframes cast-shadow {
+  0%{
+
+    box-shadow: 1px 0px 5px 0.5px rgba(51, 43, 43,0.5);
+  }
+  25%{
+
+    box-shadow: 1.5px 0.5px 7px 0.5px rgba(51, 43, 43,0.5);
+  }
+  50%{
+
+    box-shadow: 2px 1px 10px 0.5px rgba(51, 43, 43,0.5);
+  }
+  75%{
+
+    box-shadow: 2.5px 1.5px 10px 0.5px rgba(51, 43, 43,0.5);
+  }
+  100%{
+
+    box-shadow: 3px 2px 10px 0.5px rgba(51, 43, 43,0.5);
+  }
+}
+

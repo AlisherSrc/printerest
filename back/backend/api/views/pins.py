@@ -45,14 +45,26 @@ def pin(request,id):
         # Using object above and changing it
         # print(request.data)
         pin = PinSerializer(pin_obj, data=request.data, context={"request":request})
-
         # Checks if
         if pin.is_valid():
             content = request.FILES.get("content")
+            title = request.data.get("title")
+            # print(title) from request
+            description = request.data.get("description")
+            destinationLink = request.data.get("destinationLink")
+            if title:
+                pin.validated_data['title'] = title
+                print(title)
+            if description:
+                pin.validated_data["description"] = description
+                print(description)
+            if destinationLink:
+                pin.validated_data["destinationLink"] = destinationLink
+                print(destinationLink)
             if content:
                 pin.validated_data['contentUrl'] = content.name
                 print(pin.validated_data['contentUrl'],content.name)
-            # pin.save()
+            pin.save()
             return Response(pin.data)
 
 

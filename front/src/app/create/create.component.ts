@@ -28,11 +28,14 @@ export class CreateComponent {
   currPinId: number | null = null;
   pinTagsStr: string | null = null;
 
+
+  submitted:boolean = false;
   // Errors
   photoUrlError: boolean = false;
   photoError: boolean = false;
 
   tagsError: boolean = false;
+  photoNotUploadedError: boolean = false;
 
   currPin: Pin | null = null;
 
@@ -158,7 +161,7 @@ export class CreateComponent {
 
   saveData() {
     // Clean Errors:
-    this.checkErrors(JSON.parse(''))
+    this.checkErrors(JSON.parse('{"clean":"200"}'))
 
 
     const currentTime = new Date();
@@ -195,6 +198,7 @@ export class CreateComponent {
         this.pinService.postPin(pinData).subscribe({
           next: (pin: Pin) => {
             console.log(pin);
+            this.submitted = true;
           },
           error: (e) => {
             console.error(e);
@@ -203,7 +207,14 @@ export class CreateComponent {
           }
         });
       }
+    }else if(!this.selectedImage){
+      this.checkErrors(JSON.parse('{"photoNotUploaded":"error"}'));
+      return;
+    }else{
+      console.error("Current user was not found");
     }
+
+
   }
 
   editData() {
@@ -242,7 +253,7 @@ export class CreateComponent {
     if (this.currPinId) {
       this.pinService.updatePin(pinData, this.currPinId).subscribe({
         next: (v) => {
-
+          this.submitted = true;
         }, error: (e) => {
           // Check for errors
           this.checkErrors(e.error);
@@ -302,9 +313,10 @@ export class CreateComponent {
           this.tagsError = false;
           this.photoError = false;
           this.photoUrlError = false;
+          this.photoNotUploadedError = false;
           return;
         }
-
+        error === "photoNotUploaded" && (this.photoNotUploadedError = true)
         error === "destinationLink" && (this.photoUrlError = true);
         error === "photo" && (this.photoError = true);
         error === "tags" && (this.tagsError = true);

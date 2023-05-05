@@ -7,9 +7,10 @@
       <div class="pin__right">
         <h1>{{currPin?.title}}</h1>
         <p>{{currPin?.description}}</p>
-        <div>
-          {{pinUser?.user?.username}}
-          <img [src]=pinUserAvatar>
+        <div class="pin_user_info">
+          <img [src]="pinUserAvatar ?? './../../assets/images/def-user-avatar-icon-1.png'">
+          <p>{{pinUser?.user?.username}}</p>
+
         </div>
         <p>{{currPin?.destinationLink}}</p>
       </div>
