@@ -1,5 +1,5 @@
 <a class="pin" [routerLink]="'/pin/' + pin.id">
   <img [src]=pin.contentUrl>
-  <button *ngIf="!inAlbum" class="save-button">Save</button>
+  <!-- <button *ngIf="!inAlbum" class="save-button">Save</button> -->
   <a *ngIf="inAlbum" class="save-button" [routerLink]="'/pin-builder/' + pin.id">Edit</a>
 </a>

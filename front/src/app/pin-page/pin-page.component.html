@@ -2,7 +2,7 @@
   <section class="pin_container">
     <div class="pin">
       <div class="pin__left">
-        <img src="{{currPin?.contentUrl}}">
+        <img [src]="pinImage ?? this.currPin?.contentUrl">
       </div>
       <div class="pin__right">
         <h1>{{currPin?.title}}</h1>

@@ -39,7 +39,7 @@
      height:550px;
      border-radius: 25px;
    }
-   
+
    input[type="text"], textarea {
     display: block;
     width: 100%;
@@ -59,22 +59,22 @@
     background-color: #f5f5f5;
     color: #333;
   }
-  
+
   input[type="text"]:focus, textarea:focus {
     outline: none;
     border-color: rgb(57, 57, 190);
     box-shadow: 0 0 10px rgb(57, 57, 190);
   }
-  
+
   input[type="text"]::placeholder, textarea::placeholder {
     color: #999;
 
   }
-  
+
   textarea {
     resize: none;
   }
-  
+
   input[type="submit"] {
     background-color: rgb(57, 57, 190);
     color: #fff;
@@ -96,23 +96,23 @@
   input[type="submit"]:hover {
     background-color: rgb(57, 57, 115);
   }
-   
+
   #photo-tag {
     margin-bottom: 1px;
   }
-  
+
   #tags-instructions {
     font-size: 12px;
     color: grey;
     margin-bottom: 20px;
   }
-  
-  
+
+
    #photo-container {
      float: left;
      margin-right: 20px;
    }
-   
+
    button {
     padding: 10px 20px;
     background-color: transparent; /* change background color to transparent */
@@ -121,16 +121,16 @@
     border-radius: 20px;
     cursor: pointer;
     margin: 0 10px;
-  
+
    }
-   
+
    button:hover {
     background-color: rgb(57, 57, 190);
     color: #fff;
     border-radius: 20px;
-    
+
    }
-   
+
    #photo-description {
      font-size: 16px;
      padding: 10px;
@@ -140,18 +140,18 @@
     input[type="file"] {
      display: none;
    }
-    
+
    .photo-container-wrapper {
      position: relative;
      margin: auto;
      padding: 30px;
- 
+
    }
-   
+
    #photo-container {
      display: none;
    }
-   
+
    .photo-preview-wrapper {
      position:relative;
      top: 0;
@@ -160,7 +160,7 @@
      right: 0;
      float: left;
    }
-   
+
    .photo-preview-wrapper img {
      max-width: 300px;
      max-height: 100%;
@@ -180,7 +180,7 @@
      text-align: center;
      font-family: "Arial", "sans-serif";
    }
-   
+
    #photo-container:hover {
      background-color: rgb(57, 57, 115);
    }
@@ -194,7 +194,7 @@
      top:0;
      right: 0;
    }
-   
+
    #all{
      display: flex;
      justify-content: space-between;
@@ -211,7 +211,12 @@
     text-align: center;
     font-family: "Arial", "sans-serif";
   }
-  
+
   .photo-upload-label:hover {
     background-color: rgb(57, 57, 115);
+  }
+
+  .error{
+    color: #ff0f0f;
+    font-size: 1em;
   }

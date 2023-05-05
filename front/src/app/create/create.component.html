@@ -3,6 +3,7 @@
     <form class="file_getter">
       <div class="file_getter" id="all">
         <div class="photo-container-wrapper">
+          <p class="error" *ngIf="photoError">Please, make sure that you submit supported format(.jpg,.png,.gif)</p>
           <div *ngIf="!isPhotoUploaded" id="photo-dropzone" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
             <p>Drag and drop image here</p>
             <p>or</p>
@@ -18,7 +19,9 @@
           <input type="text" id="text-line" name="text-line" [(ngModel)]="textLine" [placeholder]="currPin?.title ?? 'Add name'" class="input-glow"><br><br>
           <textarea id="photo-description" name="photo-description" rows="4" cols="50" [(ngModel)]="photoDescription" [placeholder]="currPin?.description ?? 'Add Description'" class="input-glow"></textarea><br><br>
           <!-- Show photo-url only while building a pin -->
+          <p class="error" *ngIf="photoUrlError">Please, pass valid URL</p>
           <textarea id="photo-url" name="photo-url" rows="1" cols="5" [(ngModel)]="photoUrl" [placeholder]="currPin?.contentUrl ?? 'Content Url'" class="input-glow"></textarea><br><br>
+          <p class="error" *ngIf="tagsError">Please, pass valid tags,make sure that you follow required format</p>
           <textarea id="photo-tag" name="photo-tag" rows="1" cols="5" [(ngModel)]="tags" [placeholder]="pinTagsStr ??'Add some tags'" class="input-glow"></textarea>
           <p id="tags-instructions">Add tags using commas (e.g. "tag1, tag2")</p>
 

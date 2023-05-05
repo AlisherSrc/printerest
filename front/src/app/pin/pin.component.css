@@ -10,6 +10,7 @@
   justify-content: center;
   cursor: pointer;
 
+  max-height: 100vh;
 }
 
 .pin:hover img{

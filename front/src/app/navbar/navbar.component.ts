@@ -59,10 +59,10 @@ export class NavbarComponent {
     });
 
     this.userService.curr_user.subscribe(async (user) => {
-      if(user){
+      if (user) {
         this.currUser = user;
         let avatarPath;
-        if(this.currUser.avatar){
+        if (this.currUser.avatar) {
           avatarPath = mediaService.getPath(this.currUser.avatar)
         }
         // this.mediaService.getAvatar(avatarPath).subscribe((avatar) => {
@@ -70,11 +70,11 @@ export class NavbarComponent {
         //   console.log(this.userAvatar)
         // });
         // It will wait until the end of this promise so it will return not Promise but a string
-        if(this.currUser.avatar && avatarPath){
+        if (this.currUser.avatar && avatarPath) {
 
-        avatarPath = await lastValueFrom(this.mediaService.getMedia(avatarPath))
+          avatarPath = await lastValueFrom(this.mediaService.getMedia(avatarPath))
 
-        this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(avatarPath);
+          this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(avatarPath);
         }
         this.cdr.detectChanges();
         // console.log(avatarPath,this.userAvatar)

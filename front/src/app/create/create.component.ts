@@ -28,6 +28,11 @@ export class CreateComponent {
   currPinId: number | null = null;
   pinTagsStr: string | null = null;
 
+  // Errors
+  photoUrlError: boolean = false;
+  photoError: boolean = false;
+
+  tagsError: boolean = false;
 
   currPin: Pin | null = null;
 
@@ -104,6 +109,9 @@ export class CreateComponent {
     } else {
       this.photoPreview = '';
       this.isPhotoUploaded = false;
+      const jsonError: JSON = JSON.parse('{"photo":"error"}');
+      this.checkErrors(jsonError);
+      return;
     }
 
   }
@@ -133,6 +141,10 @@ export class CreateComponent {
     } else {
       this.photoPreview = '';
       this.isPhotoUploaded = false;
+
+      const jsonError: JSON = JSON.parse('{"photo":"error"}');
+      this.checkErrors(jsonError);
+      return;
     }
   }
 
@@ -145,6 +157,10 @@ export class CreateComponent {
 
 
   saveData() {
+    // Clean Errors:
+    this.checkErrors(JSON.parse(''))
+
+
     const currentTime = new Date();
 
     if ((this.curr_user && this.curr_user.user && this.selectedImage)) {
@@ -176,18 +192,32 @@ export class CreateComponent {
       // console.log(pinData);alright
       // if it is not a edit mode, then we do post request and put if otherwise
       if (!this.editMode) {
-        this.pinService.postPin(pinData).subscribe((pin: Pin) => {
-          console.log(pin);
+        this.pinService.postPin(pinData).subscribe({
+          next: (pin: Pin) => {
+            console.log(pin);
+          },
+          error: (e) => {
+            console.error(e);
+            this.checkErrors(e.error);
+            return;
+          }
         });
       }
     }
   }
 
   editData() {
+    this.checkErrors(JSON.parse('{"clean":"200"}'))
+
     const pinData = new FormData();
     let tagsNames: string[] = [];
     let tags: Tag[] = [];
 
+    // verify tags input,they should go like: milk,dinner,lamp
+    if (!this.isValidTagString(this.tags) && (this.tags)) {
+      this.checkErrors(JSON.parse('{"tags":"error"}'));
+      return;
+    }
     // Get tags names by splitting them with ','
     tagsNames = this.tags.split(',');
 
@@ -210,10 +240,16 @@ export class CreateComponent {
     console.log("selected img url: " + this.photoUrl);
 
     if (this.currPinId) {
-      this.pinService.updatePin(pinData, this.currPinId).subscribe((pin: Pin) => {
-        console.log(pin);
+      this.pinService.updatePin(pinData, this.currPinId).subscribe({
+        next: (v) => {
 
-      });
+        }, error: (e) => {
+          // Check for errors
+          this.checkErrors(e.error);
+          return;
+        }
+      }
+      );
     } else {
       console.warn("Pin Id is not found")
     }
@@ -227,10 +263,52 @@ export class CreateComponent {
     }
   }
 
+  isValidTagString = (tagsStr: string) => {
+    // Split the string by commas
+    const tags = tagsStr.split(',');
+
+    // Check each tag
+    for (const tag of tags) {
+      // Trim leading and trailing whitespace from each tag
+      const trimmedTag = tag.trim();
+
+      // Check if the trimmed tag is empty
+      if (trimmedTag.length === 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   // getHeaders(): { headers: HttpHeaders } {
   //   const headers = new HttpHeaders({
   //     'Content-Type': 'multipart/form-data',
   //   });
   //   return { headers };
   // }
+
+  checkErrors = (errors: JSON) => {
+    if (!errors) {
+      this.tagsError = false;
+      this.photoError = false;
+      this.photoUrlError = false;
+      return;
+    }
+
+    for (let error in errors) {
+      if (errors.hasOwnProperty(error)) {
+        if(error === "clean") {
+          this.tagsError = false;
+          this.photoError = false;
+          this.photoUrlError = false;
+          return;
+        }
+
+        error === "destinationLink" && (this.photoUrlError = true);
+        error === "photo" && (this.photoError = true);
+        error === "tags" && (this.tagsError = true);
+      }
+    }
+  }
 }

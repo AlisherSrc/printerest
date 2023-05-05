@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PinsService } from '../pins-service.service';
 import { Pin } from '../models/Pin';
-import { lastValueFrom } from 'rxjs';
+import { last, lastValueFrom } from 'rxjs';
 import { UserProfile } from '../models/UserProfile';
 import { UserService } from '../user.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -16,7 +16,8 @@ import { MediaService } from '../media.service';
 export class PinPageComponent {
   currPin: Pin | null = null;
   pinUser: UserProfile | null = null;
-  pinUserAvatar: SafeUrl| null = null;
+  pinUserAvatar: SafeUrl | null = null;
+  pinImage: SafeUrl | null = null;
 
   constructor(private route: ActivatedRoute,
     private pinService: PinsService,
@@ -46,13 +47,13 @@ export class PinPageComponent {
     if (pinUserUsername) {
       const pinUserTemp = await lastValueFrom(this.userService.getUser(pinUserUsername));
 
-      if(pinUserTemp) this.pinUser = pinUserTemp;
+      if (pinUserTemp) this.pinUser = pinUserTemp;
       else console.warn("Something went wrong while getting user on the pin page component")
     }
     // getting avatar for user
-    if(this.pinUser && this.pinUser.avatar){
+    if (this.pinUser && this.pinUser.avatar) {
       const path = this.mediaService.getPath(this.pinUser.avatar);
-      console.log("Path: "  + path);
+      console.log("Path: " + path);
 
       // image from backend
       this.mediaService.getMedia(path).subscribe((path) => {
@@ -61,6 +62,18 @@ export class PinPageComponent {
         this.pinUserAvatar = safePathTemp
       })
     }
+
+
+    if (this.currPin?.content && this.currPin?.contentUrl) {
+      const pinContent = await lastValueFrom(
+        this.mediaService.getMedia('media/pins/' + this.currPin.contentUrl)
+      );
+      if (pinContent) {
+        this.pinImage = this.sanitizer.bypassSecurityTrustUrl(pinContent);
+        console.log(pinContent);
+      }
+    }
+
   }
 
 
