@@ -41,6 +41,9 @@
 }
 /* When hovers, it applies this to the .save-button, it would do it to itself if it is not specified */
 .pin:hover .save-button{
-  display: inline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 

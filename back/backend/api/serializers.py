@@ -4,7 +4,7 @@ from api.models import User,Tag,USER_STATUS_CHOICES
 
 from api.models import Pin, UserProfile, Album
 
-
+from api.validators import EmptyStringURLValidator
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -20,20 +20,22 @@ class TagSerializer(serializers.ModelSerializer):
         }
 
 
+
+
 class PinSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=False,required=False)
-    title = serializers.CharField()
+    title = serializers.CharField(required=False)
     description = serializers.CharField(required=False)
-    contentUrl = serializers.URLField()
+    contentUrl = serializers.URLField(required=False,validators=[EmptyStringURLValidator()])
     content = serializers.ImageField(required=False)
-    timeUploaded = serializers.DateTimeField(allow_null=True)
+    timeUploaded = serializers.DateTimeField(allow_null=True,required=False)
     # It will not show up in response
     # user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     user = UserSerializer(read_only=True)
     # For using existing user without creating a new one
     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     tags = TagSerializer(many=True,required=False )
-    destinationLink = serializers.URLField(required=False, allow_blank=True)
+    destinationLink = serializers.URLField(required=False, allow_blank=True,validators=[EmptyStringURLValidator()])
 
     def create(self, validated_data):
         # Getting user
@@ -53,11 +55,17 @@ class PinSerializer(serializers.Serializer):
         return pin
 
     def update(self, instance, validated_data):
+
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.contentUrl = validated_data.get('contentUrl', instance.contentUrl)
+        instance.content = validated_data.get('content',instance.content)
         instance.timeUploaded = validated_data.get('timeUploaded', instance.timeUploaded)
         tags_data = validated_data.get('tags')
+        print("Instance content" + str(instance.content))
+
+
+
         if tags_data:
             instance.tags.clear()
             for tag_data in tags_data:

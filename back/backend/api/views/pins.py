@@ -43,11 +43,23 @@ def pin(request,id):
         return Response(pin.errors,status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'PUT':
         # Using object above and changing it
+        # print(request.data)
         pin = PinSerializer(pin_obj, data=request.data, context={"request":request})
+
         # Checks if
         if pin.is_valid():
-            pin.save()
+            content = request.FILES.get("content")
+            if content:
+                pin.validated_data['contentUrl'] = content.name
+                print(pin.validated_data['contentUrl'],content.name)
+            # pin.save()
             return Response(pin.data)
+
+
+        # content_url = content.name if content else None
+        # pin.contentUrl = content_url
+
+        # print("Pin: " +  pin.contentUrl)
         return Response(pin.errors,status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         pin_obj.delete()

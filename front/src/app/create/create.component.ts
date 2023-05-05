@@ -6,6 +6,8 @@ import { UserProfile } from '../models/UserProfile';
 import { Pin } from '../models/Pin';
 import { Tag } from '../models/Tag';
 import { PinsService } from '../pins-service.service';
+import { ActivatedRoute } from '@angular/router';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create',
@@ -16,28 +18,69 @@ export class CreateComponent {
   curr_user: UserProfile | null = null;
   textLine: string = '';
   photoDescription: string = '';
-  photoPreview: string = '';
+  photoPreview: string | SafeUrl = '';
   selectedImage: File | null = null;
   isPhotoUploaded: boolean = false;
-  photoUrl: string = '';
+  photoUrl: string | SafeUrl = '';
   tags: string = '';
 
+  editMode: boolean = false;
+  currPinId: number | null = null;
+  pinTagsStr: string | null = null;
+
+
+  currPin: Pin | null = null;
 
   constructor(private http: HttpClient,
     private userService: UserService,
-    private pinService: PinsService) {
+    private pinService: PinsService,
+    private route: ActivatedRoute) {
 
+    //using url, find out whether it will edit or delete existing pin or build a new one
+    this.editModeVerify();
   }
 
 
   async ngOnInit(): Promise<void> {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    // const currUserTemp = await lastValueFrom(this.userService.curr_user);
     this.userService.curr_user.subscribe((user) => {
       const currUserTemp = user;
       if (currUserTemp) this.curr_user = currUserTemp;
     })
+    // if edit mode is enabled
+    if (this.currPinId && this.editMode) {
+      const currPinTemp = await lastValueFrom(this.pinService.getPin(this.currPinId));
+
+      if (currPinTemp) {
+        this.currPin = currPinTemp;
+      }
+      if (this.currPin?.tags) {
+        this.pinTagsStr = this.currPin.tags.map(tag => tag.name).join(', ');
+      }
+
+      // giving default values of Pin
+
+      this.textLine = this.currPin?.title ?? this.textLine;
+      this.photoDescription = this.currPin?.description ?? this.photoDescription;
+      this.tags = this.pinTagsStr ?? this.tags;
+      this.photoUrl = this.currPin?.destinationLink ?? this.photoUrl;
+      this.photoPreview = this.currPin?.contentUrl ?? this.photoPreview;
+      // this.selectedImage = this.currPin?.content ?? this.selectedImage;
+
+    }
+  }
+
+  editModeVerify() {
+    const pinId: string | null = this.route.snapshot.paramMap.get("pinId");
+
+    if (pinId) {
+      this.editMode = true;
+      this.currPinId = parseInt(pinId);
+    } else {
+      this.editMode = false;
+    }
+
   }
 
   onSubmit() {
@@ -75,7 +118,7 @@ export class CreateComponent {
     event.preventDefault();
     this.isDragOver = false;
   }
-  
+
   onDrop(event: DragEvent) {
     event.preventDefault();
     this.isDragOver = false;
@@ -101,42 +144,10 @@ export class CreateComponent {
   }
 
 
-
-
-  // saveData() {
-  //   const formData = new FormData();
-  //   const currentTime = new Date();
-
-  //   if (this.curr_user && this.curr_user.user && this.selectedImage) {
-  //     let tagsNames: string[] = [];
-  //     let tags: Tag[] = [];
-
-  //     // Get tags names by splitting them with ','
-  //     tagsNames = this.tags.split(",");
-
-  //     tagsNames.map((tagName) => {
-  //       tags.push({ name: tagName });
-  //     });
-
-  //     console.log("content url: " + this.photoPreview);
-  //     formData.append('title', this.textLine);
-  //     formData.append('description', this.photoDescription);
-  //     formData.append('content', this.selectedImage);
-  //     formData.append('timeUploaded', currentTime.toISOString());
-  //     formData.append('destinationLink', this.photoUrl);
-  //     formData.append('tags', JSON.stringify(tags));
-  //     formData.append('user', this.curr_user.user);
-
-  //     this.pinService.postPin(formData).subscribe((response) => {
-  //       console.log(response);
-  //     });
-  //   }
-  // }
-
   saveData() {
     const currentTime = new Date();
 
-    if (this.curr_user && this.curr_user.user && this.selectedImage) {
+    if ((this.curr_user && this.curr_user.user && this.selectedImage)) {
       let tagsNames: string[] = [];
       let tags: Tag[] = [];
 
@@ -157,15 +168,62 @@ export class CreateComponent {
       pinData.append('description', this.photoDescription);
       pinData.append('content', this.selectedImage);
       pinData.append('timeUploaded', currentTime.toISOString());
-      pinData.append('destinationLink', this.photoUrl);
+      pinData.append('destinationLink', JSON.stringify(this.photoUrl));
       pinData.append('tags', tagsBlob);
       pinData.append('username', JSON.stringify(this.curr_user.user.username));
 
 
       // console.log(pinData);alright
-      this.pinService.postPin(pinData).subscribe((response) => {
-        console.log(response);
+      // if it is not a edit mode, then we do post request and put if otherwise
+      if (!this.editMode) {
+        this.pinService.postPin(pinData).subscribe((pin: Pin) => {
+          console.log(pin);
+        });
+      }
+    }
+  }
+
+  editData() {
+    const pinData = new FormData();
+    let tagsNames: string[] = [];
+    let tags: Tag[] = [];
+
+    // Get tags names by splitting them with ','
+    tagsNames = this.tags.split(',');
+
+    tagsNames.map((tagName) => {
+      tags.push({ name: tagName });
+    });
+
+    const tagsJSON = JSON.stringify(tagsNames);
+    const tagsBlob = new Blob([tagsJSON], { type: 'application/json' });
+
+    // adding edited data
+    console.log(this.photoUrl)
+    this.textLine && pinData.append("title", this.textLine);
+    this.photoDescription && pinData.append("description", this.photoDescription);
+    this.selectedImage && pinData.append("content", this.selectedImage);
+    this.photoUrl && pinData.append("destinationLink", this.photoUrl.toString());
+    tagsBlob && pinData.append("tags", tagsBlob);
+    this.curr_user?.user?.username && pinData.append("username", this.curr_user?.user?.username);
+
+    console.log("selected img url: " + this.photoUrl);
+
+    if (this.currPinId) {
+      this.pinService.updatePin(pinData, this.currPinId).subscribe((pin: Pin) => {
+        console.log(pin);
+
       });
+    } else {
+      console.warn("Pin Id is not found")
+    }
+  }
+
+  deleteData() {
+    if (this.currPinId) {
+      this.pinService.deletePin(this.currPinId).subscribe((response) => {
+        console.log(response);
+      })
     }
   }
 

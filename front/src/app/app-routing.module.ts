@@ -17,6 +17,7 @@ const routes: Routes = [
   {path: 'settings',component:SettingsComponent},
   {path: 'pin-builder',component:CreateComponent},
   {path: 'albums/:username/:album',component:AlbumComponent},
+  {path: 'pin-builder/:pinId',component:CreateComponent},
   {path:'**',component:NotfoundComponent}
 ];
 

@@ -35,8 +35,15 @@ export class PinComponent {
         console.log(pinContent);
       }
     }
+
+    this.isAlbumVerify();
   }
 
+  isAlbumVerify(){
+    const albumName : string | null = this.route.snapshot.paramMap.get("album");
+
+    albumName ? this.inAlbum = true : false;
+  }
 
 
 }

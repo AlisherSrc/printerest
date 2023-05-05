@@ -15,13 +15,16 @@
           </div>
         </div>
         <div id='desc'>
-          <input type="text" id="text-line" name="text-line" [(ngModel)]="textLine" placeholder="Add name" class="input-glow"><br><br>
-          <textarea id="photo-description" name="photo-description" rows="4" cols="50" [(ngModel)]="photoDescription" placeholder="Add Description" class="input-glow"></textarea><br><br>
-          <textarea id="photo-url" name="photo-url" rows="1" cols="5" [(ngModel)]="photoUrl" placeholder="Content Url" class="input-glow"></textarea><br><br>
-          <textarea id="photo-tag" name="photo-tag" rows="1" cols="5" [(ngModel)]="tags" placeholder="Add some tags" class="input-glow"></textarea>
+          <input type="text" id="text-line" name="text-line" [(ngModel)]="textLine" [placeholder]="currPin?.title ?? 'Add name'" class="input-glow"><br><br>
+          <textarea id="photo-description" name="photo-description" rows="4" cols="50" [(ngModel)]="photoDescription" [placeholder]="currPin?.description ?? 'Add Description'" class="input-glow"></textarea><br><br>
+          <!-- Show photo-url only while building a pin -->
+          <textarea id="photo-url" name="photo-url" rows="1" cols="5" [(ngModel)]="photoUrl" [placeholder]="currPin?.contentUrl ?? 'Content Url'" class="input-glow"></textarea><br><br>
+          <textarea id="photo-tag" name="photo-tag" rows="1" cols="5" [(ngModel)]="tags" [placeholder]="pinTagsStr ??'Add some tags'" class="input-glow"></textarea>
           <p id="tags-instructions">Add tags using commas (e.g. "tag1, tag2")</p>
-         
-          <button type="button" (click)="saveData()">Save</button>
+
+          <button *ngIf="!editMode" type="button" (click)="saveData()">Save</button>
+          <button *ngIf="editMode" type="button" (click)="editData()">Edit</button>
+          <button *ngIf="editMode" (click)="deleteData()" >Delete Pin</button>
         </div>
       </div>
     </form>
