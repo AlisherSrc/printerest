@@ -109,6 +109,7 @@ def pin(request,id):
 #         headers = self.get_success_headers(serializer.data)
 #         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 class Pins(generics.ListCreateAPIView):
+    permission_classes = [AllowAny,]
     queryset = Pin.objects.all()
     serializer_class = PinSerializer
     parser_classes = [MultiPartParser, FormParser]

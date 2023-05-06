@@ -178,3 +178,8 @@ REST_FRAMEWORK = {
 
 MEDIA_URL = 'api/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'api/media')
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:4200',
+)

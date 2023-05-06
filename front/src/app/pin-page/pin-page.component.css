@@ -19,9 +19,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  position: relative;
 }
 .pin__left img{
   border-radius: 10px 0px 0px 10px;
+  max-width: 100%;
+  max-height: 100vh;
 }
 
 .pin__right{

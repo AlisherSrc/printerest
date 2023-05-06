@@ -61,7 +61,7 @@ body {
   button[type="submit"]:focus {
     outline: none;
   }
-  button {
+  button, .delete-button {
     background-color: transparent;
     color: black;
     border: 1px solid black;
@@ -70,10 +70,11 @@ body {
     cursor: pointer;
   }
 
-  button:hover {
+  .delete-button:hover{
     background-color: red;
     color: white;
   }
+
 
   button:focus {
     outline: none;

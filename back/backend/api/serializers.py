@@ -8,7 +8,16 @@ from api.validators import EmptyStringURLValidator
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('username', 'email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
+        return user
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -102,9 +111,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
-        user = User.objects.create_user(**user_data)
-
-        profile = UserProfile.objects.create(user=user, **validated_data)
+        try:
+            user = User.objects.get(username=user_data['username'])
+        except User.DoesNotExist:
+            user = User.objects.create_user(**user_data)
+        else:
+            # Handle case where user already exists, e.g. update user fields
+            pass
+        validated_data['user'] = user
+        profile = UserProfile.objects.create(**validated_data)
         return profile
 
     def update(self, instance, validated_data):

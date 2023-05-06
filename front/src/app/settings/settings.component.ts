@@ -17,7 +17,7 @@ export class SettingsComponent {
   user !: UserProfile;
 
   emailError: boolean;
-  emailAlreadyRegError : boolean;
+  emailAlreadyRegError: boolean;
 
   usernameAlreadyRegError: boolean;
   unexpectedError: boolean;
@@ -27,7 +27,9 @@ export class SettingsComponent {
 
   constructor(private userService: UserService,
     private auth: AuthService) {
-    this.username = "";
+
+    this.username = localStorage.getItem("username") ?? ""
+
     this.email = "";
     this.emailError = false;
     this.isSubmited = false;
@@ -77,23 +79,23 @@ export class SettingsComponent {
 
       if (this.username === "") {
         // If this email is already in our database then we show an error
-        if(this.email === this.user.email){
+        if (this.email === this.user.email) {
           this.emailAlreadyRegError = true;
           return;
-        }else{
+        } else {
           this.emailAlreadyRegError = false;
         }
 
         inputUser = {
-          user:{},
+          user: {},
           email: this.email
         };
-      }else if(this.email === ""){
+      } else if (this.email === "") {
         // Same verification as above but this time this is for username
-        if(this.username === this.user.user.username){
+        if (this.username === this.user.user.username) {
           this.usernameAlreadyRegError = true;
           return;
-        }else{
+        } else {
           this.usernameAlreadyRegError = false;
         }
 
@@ -103,19 +105,19 @@ export class SettingsComponent {
           }
         }
 
-      }else if(this.username !== "" && this.email !== "") {
+      } else if (this.username !== "" && this.email !== "") {
         // Same verification as above but this time this is for both of them
-        if(this.username === this.user.user.username){
+        if (this.username === this.user.user.username) {
           this.usernameAlreadyRegError = true;
           return;
-        }else{
+        } else {
           this.usernameAlreadyRegError = false;
         }
 
-        if(this.email === this.user.email){
+        if (this.email === this.user.email) {
           this.emailAlreadyRegError = true;
           return;
-        }else{
+        } else {
           this.emailAlreadyRegError = false;
         }
 
@@ -125,21 +127,23 @@ export class SettingsComponent {
           },
           email: this.email
         };
-      }else{
+      } else {
         inputUser = {}
         console.error("Unexpected error while creating an input user in onSubmit")
         return;
       }
+      const username = localStorage.getItem("username");
 
-      this.userService.updateUser(this.user.user.username, inputUser).subscribe(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.error(error)
-        }
-      );
-
+      if (username) {
+        this.userService.updateUser(username, inputUser).subscribe(
+          (response) => {
+            console.log(response);
+          },
+          (error) => {
+            console.error(error)
+          }
+        );
+      }
       // console.log("Hello!")
     }
 
@@ -161,6 +165,12 @@ export class SettingsComponent {
     console.log(inputUser, this.username);
   }
 
-
+  async deleteUser(){
+    const resp = await lastValueFrom(this.userService.deleteUser(this.username));
+    this.isSubmited = true;
+    console.log(resp)
+    localStorage.clear();
+    this.auth.setLoggedIn(false);
+  }
 
 }

@@ -45,6 +45,22 @@ export class UserService {
     );
   }
 
+  postUser(user: UserProfile): Observable<UserProfile>{
+    return this.http.post(`${BASE_URL}/api/users/`,user).pipe(
+      catchError((error:any) => {
+        throw error;
+      })
+    )
+  }
 
-
+  deleteUser(username:string){
+    console.warn("deleting user...")
+    return this.http.delete(
+      `${BASE_URL}/api/users/${username}/`
+    ).pipe(
+      catchError((error:any) => {
+        throw error;
+      })
+    )
+  }
 }

@@ -28,7 +28,7 @@
 
           <button *ngIf="!editMode" type="button" (click)="saveData()">Save</button>
           <button *ngIf="editMode" type="button" (click)="editData()">Edit</button>
-          <button *ngIf="editMode" (click)="deleteData()" >Delete Pin</button>
+          <a [routerLink]="'/home/'"><button *ngIf="editMode" (click)="deleteData()" >Delete Pin</button></a>
           <p *ngIf="submitted" class="success-text">Success!<img src="./../../assets/images/success-icon.svg"></p>
         </div>
       </div>

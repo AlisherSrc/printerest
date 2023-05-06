@@ -10,10 +10,37 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.contrib.auth.models import User
+from ..serializers import UserSerializer
+from rest_framework_jwt.settings import api_settings
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 User = get_user_model()
 
 
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
+class RegisterAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            response_data = serializer.data
+            response_data['token'] = token
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# to here
+
+
+
 class UserProfileView(APIView):
+    permission_classes = [AllowAny]
     # @staticmethod
     # def get_object(pk):
     #     try:
@@ -39,9 +66,10 @@ class UserProfileView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        print("Req: " + str(request.data))
         serializer = UserProfileSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -52,8 +80,8 @@ class UserProfileView(APIView):
         if serializer.is_valid():
 
             serializer.save()
-            # print("Request data:", request.data)  # Add this line everything is fine here
-            # print("Serializer data:", serializer.data)  # Add this line
+            # print("Request data:", request.data)  #  everything is fine here
+            # print("Serializer data:", serializer.data)
             return Response(serializer.data)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

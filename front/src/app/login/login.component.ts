@@ -59,7 +59,21 @@ export class LoginComponent {
     console.log("Registered mode: " + this.registerMode);
   }
 
-  resgiter = () => {
-
-  }
+  register() {
+    this.auth.register(this.username, this.email, this.password).subscribe(
+      (response) => {
+        console.log('User registered:', response);
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('username', this.username);
+        localStorage.setItem('email',this.email);
+        // localStorage.setItem('password',this.password);
+        this.auth.setLoggedIn(true);
+        this.auth.login(this.username,this.password);
+        this.toggleRegisterMode();
+      },
+      (error) => {
+        console.log('Registration error:', error);
+      }
+    );
+    }
 }

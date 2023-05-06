@@ -16,7 +16,7 @@ import { PinsService } from '../pins-service.service';
 export class ProfileComponent {
 
   userAvatar !: SafeUrl;
-  userName: string = "Cool user";
+  userName: string = "cool user";
   usersPins : Pin[] = [];
 
   currUser !: UserProfile;
@@ -28,10 +28,11 @@ export class ProfileComponent {
     private pinService: PinsService) {
 
     this.userService.curr_user.subscribe(async (user) => {
+      console.log("Current profile user: " + user)
+
       if (user && user.user && user.user.username) {
         // getting a current user
         this.currUser = user;
-        console.log(user)
         this.userName = user.user.username
 
         let userAvatarPath;
@@ -60,7 +61,14 @@ export class ProfileComponent {
 
 
   }
-
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  const curr_username = localStorage.getItem("username");
+  if(curr_username){
+    this.userName = curr_username;
+  }
+}
 
 
   activeSection = 'created'; // set the default active section to 'created'
